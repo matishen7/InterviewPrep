@@ -1,3 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
-//change1
+﻿
+Get();
+
+static void Get()
+{
+    Console.WriteLine("Hello");
+}
