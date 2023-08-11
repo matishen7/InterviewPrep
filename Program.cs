@@ -1,12 +1,31 @@
 ﻿
+using ConsoleApp1;
 using System.ComponentModel.DataAnnotations;
+using static ConsoleApp1.BST;
 
 string s = "AB";
 Console.WriteLine(TitleToNumber(s));
 
+static bool SameTree(Node node1, Node node2)
+{
+    var bst = new BinaryTree(node1);
+    var list1 = bst.BFS();
+    bst = new BinaryTree(node2);
+    var list2 = bst.BFS();
+    return SameList(list1, list2);
+}
+
+static bool SameList(List<int> list1, List<int> list2)
+{
+    if (list1.Count != list2.Count) return false;
+    for (int i = 0; i < list1.Count; i++)
+        if (list1[i] != list2[i]) return false;
+    return true;
+}
+
 static int TitleToNumber(string columnTitle)
 {
-    var dic = new Dictionary<char, int>() 
+    var dic = new Dictionary<char, int>()
     {
         { 'A', 1},
         { 'B', 2},
@@ -36,7 +55,7 @@ static int TitleToNumber(string columnTitle)
         { 'Z', 26},
     };
     int result = 0;
-    
+
     for (int i = 0; i < columnTitle.Length; i++)
     {
         int t = columnTitle.Length - i;
