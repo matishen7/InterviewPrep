@@ -8,10 +8,9 @@ Console.WriteLine(TitleToNumber(s));
 
 static bool SameTree(Node node1, Node node2)
 {
-    var bst = new BinaryTree(node1);
-    var list1 = bst.BFS();
-    bst = new BinaryTree(node2);
-    var list2 = bst.BFS();
+    var bst = new BST();
+    var list1 = bst.BFS(node1);
+    var list2 = bst.BFS(node2);
     return SameList(list1, list2);
 }
 
