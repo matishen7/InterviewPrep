@@ -1,10 +1,31 @@
 ﻿
 using ConsoleApp1;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 using static ConsoleApp1.BST;
 
-string s = "AB";
-Console.WriteLine(TitleToNumber(s));
+string s = "abcd";
+Console.WriteLine(MakeSmallestPalindrome(s));
+
+ static string MakeSmallestPalindrome(string s)
+{
+    var sb = new StringBuilder(s);
+    int left = 0;
+    int right = s.Length - 1;
+    while(left < right)
+    {
+        if ((int)sb[left] > (int)sb[right])
+        {
+            sb.Replace(sb[left], sb[right], left, 1);
+        }
+        else if ((int)sb[left] < (int)sb[right])
+        {
+            sb.Replace(sb[right], sb[left], right, 1);
+        }
+        left++; right-- ;
+    }
+    return sb.ToString();
+}
 
 static bool SameTree(Node node1, Node node2)
 {
