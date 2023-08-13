@@ -4,15 +4,49 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string s = "abcd";
-Console.WriteLine(MakeSmallestPalindrome(s));
+string[] words = { "ab", "ba", "cc" };
+Console.WriteLine(MaximumNumberOfStringPairs(words));
 
- static string MakeSmallestPalindrome(string s)
+static int MaximumNumberOfStringPairs(string[] words)
+{
+    int count = 0;
+    var dic = new Dictionary<string, int>();
+    for (var i = 0; i < words.Length; i++)
+    {
+        var reverse = ReverseString(words[i]);
+        dic.Add(words[i], i);
+
+    }
+    for (var i = 0; i < words.Length; i++)
+    {
+        var reverse = ReverseString(words[i]);
+        if (dic.TryGetValue(reverse, out int index) && index != i)
+        {
+            count++;
+        }
+
+    }
+
+    return count/2;
+}
+
+static string ReverseString(string s)
+{
+    string result = "";
+    for (int i = 0; i < s.Length; i++)
+    {
+        result = s[i] + result;
+    }
+
+    return result;
+}
+
+static string MakeSmallestPalindrome(string s)
 {
     var sb = new StringBuilder(s);
     int left = 0;
     int right = s.Length - 1;
-    while(left < right)
+    while (left < right)
     {
         if ((int)sb[left] > (int)sb[right])
         {
@@ -22,7 +56,7 @@ Console.WriteLine(MakeSmallestPalindrome(s));
         {
             sb.Replace(sb[right], sb[left], right, 1);
         }
-        left++; right-- ;
+        left++; right--;
     }
     return sb.ToString();
 }
