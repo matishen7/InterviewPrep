@@ -4,8 +4,40 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string num = "51230100";
-Console.WriteLine(RemoveTrailingZeros(num));
+var GrayScale = new float[,] {
+    {  0.3f,  0.3f,  0.3f,  0.0f,  0.0f },
+    {  0.6f,  0.6f,  0.6f,  0.0f,  0.0f },
+    {  0.1f,  0.1f,  0.1f,  0.0f,  0.0f },
+    {  0.0f,  0.0f,  0.0f,  1.0f,  0.0f },
+    {  0.0f,  0.0f,  0.0f,  0.0f,  1.0f }
+};
+Console.WriteLine(To1DArray(GrayScale));
+Print1DArray(To1DArray(GrayScale));
+
+static float[] To1DArray(float[,] input)
+{
+    // Step 1: get total size of 2D array, and allocate 1D array.
+    int size = input.Length;
+    float[] result = new float[size];
+
+    // Step 2: copy 2D array elements into a 1D array.
+    int write = 0;
+    for (int i = 0; i <= input.GetUpperBound(0); i++)
+    {
+        for (int z = 0; z <= input.GetUpperBound(1); z++)
+        {
+            result[write++] = input[i, z];
+        }
+    }
+    // Step 3: return the new array.
+    return result;
+}
+
+static void Print1DArray(float[] arr)
+{
+    for (int i = 0; i < arr.Length; i++)
+        Console.Write(arr[i] + "\t");
+}
 
 static string RemoveTrailingZeros(string num)
 {
