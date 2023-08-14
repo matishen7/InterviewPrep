@@ -4,8 +4,26 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string[] words = { "ab", "ba", "cc" };
-Console.WriteLine(MaximumNumberOfStringPairs(words));
+string num = "51230100";
+Console.WriteLine(RemoveTrailingZeros(num));
+
+static string RemoveTrailingZeros(string num)
+{
+    string result = "";
+    bool flag = true;
+    for (int i = num.Length - 1; i >= 0; i--)
+    {
+        if (num[i] == '0' && flag == true)
+            continue;
+        else
+        {
+            result = num[i] + result;
+            flag = false;
+        }
+    }
+
+    return result;
+}
 
 static int MaximumNumberOfStringPairs(string[] words)
 {
@@ -27,7 +45,7 @@ static int MaximumNumberOfStringPairs(string[] words)
 
     }
 
-    return count/2;
+    return count / 2;
 }
 
 static string ReverseString(string s)
