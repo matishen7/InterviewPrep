@@ -4,15 +4,22 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-var GrayScale = new float[,] {
-    {  0.3f,  0.3f,  0.3f,  0.0f,  0.0f },
-    {  0.6f,  0.6f,  0.6f,  0.0f,  0.0f },
-    {  0.1f,  0.1f,  0.1f,  0.0f,  0.0f },
-    {  0.0f,  0.0f,  0.0f,  1.0f,  0.0f },
-    {  0.0f,  0.0f,  0.0f,  0.0f,  1.0f }
-};
-Console.WriteLine(To1DArray(GrayScale));
-Print1DArray(To1DArray(GrayScale));
+string[] details = { "7868190130M7522", "5303914400F9211", "9273338290F4010" };
+
+Console.WriteLine(CountSeniors(details));
+
+static int CountSeniors(string[] details)
+{
+    int count = 0;
+    foreach (var detail in details)
+    {
+        var f = detail[11];
+        var s = detail[12];
+        int age = ((int)f - 48) * 10 + (int)s - 48;
+        if (age > 60) count++;
+    }
+    return count;
+}
 
 static float[] To1DArray(float[,] input)
 {
