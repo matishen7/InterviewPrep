@@ -4,9 +4,57 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string details = "a good   example";
+string version1 = "1.0.1", version2 = "1";
 
-Console.WriteLine(ReverseWords(details));
+Console.WriteLine(CompareVersion(version1, version2));
+
+static int CompareVersion(string version1, string version2)
+{
+    var v1 = version1.Split('.').ToList();
+    var v2 = version2.Split('.').ToList();
+    if (v1.Count > v2.Count)
+        while (v1.Count > v2.Count)
+            v2.Add("0");
+    else if (v1.Count < v2.Count)
+        while (v1.Count < v2.Count)
+            v1.Add("0");
+
+    for (int i = 0; i < v1.Count; i++)
+        v1[i] = IgnoreLeadingZeros(v1[i]);
+    for (int i = 0; i < v2.Count; i++)
+        v2[i] = IgnoreLeadingZeros(v2[i]);
+    int v1Num;
+    int v2Num;
+    for (int i = 0; i < v1.Count; i++)
+    {
+        if (v1[i] == "") v1Num = 0; else v1Num = Int32.Parse(v1[i]);
+        if (v2[i] == "") v2Num = 0; else v2Num = Int32.Parse(v2[i]);
+
+        if (v1Num > v2Num) return 1;
+        else if (v1Num < v2Num) return -1;
+    }
+
+    return 0;
+}
+
+
+static string IgnoreLeadingZeros(string s)
+{
+    Stack<char> chars = new Stack<char>();
+    var result = "";
+    for (int i = s.Length - 1; i >= 0; i--)
+        chars.Push(s[i]);
+    while (true)
+    {
+        if (chars.Count != 0 && chars.Peek() == '0') chars.Pop();
+        else break;
+    }
+
+    while (chars.Count != 0)
+        result += chars.Pop();
+
+    return result;
+}
 
 static string ReverseWords(string s)
 {
