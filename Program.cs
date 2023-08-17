@@ -4,9 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string[] details = { "7868190130M7522", "5303914400F9211", "9273338290F4010" };
+string details = "a good   example";
 
-Console.WriteLine(CountSeniors(details));
+Console.WriteLine(ReverseWords(details));
+
+static string ReverseWords(string s)
+{
+    string result = "";
+    string[] words = s.Split(' ');
+    for (int i = words.Length - 1; i >= 0; i--)
+    {
+        if (words[i] == string.Empty) continue;
+        result += words[i] + " ";
+    }
+    return result.Trim();
+}
 
 static int CountSeniors(string[] details)
 {
