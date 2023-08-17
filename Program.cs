@@ -183,49 +183,41 @@ static int TitleToNumber(string columnTitle)
 
 static string Convert(string s, int numRows)
 {
-    int colNum = (int)Math.Ceiling(s.Length / 2.0);
-    char[,] matrix = new char[numRows, colNum];
-    int index = 0;
-    int currRow = 0;
-    int currCol = 0;
-    bool diag = false;
-    while (index < s.Length)
+    if (numRows == 1 || numRows >= s.Length)
     {
-
-        if (currRow == numRows)
-        {
-            currRow -= 2; ;
-            currCol++;
-            matrix[currRow, currCol] = s[index];
-            index++;
-            diag = true;
-        }
-        else if (currRow < numRows && diag == false)
-        {
-            currRow++;
-            matrix[currRow - 1, currCol] = s[index];
-            index++;
-        }
-        else if (diag)
-        {
-            while (currRow > 0)
-            {
-                currRow--;
-                currCol++;
-                matrix[currRow, currCol] = s[index];
-                index++;
-            }
-
-            diag = false;
-            currRow++;
-        }
-
-
-
-        PrintArray(matrix);
+        return s;
     }
-    Console.WriteLine(index);
-    return s;
+
+    var result = new StringBuilder[numRows];
+    for (int i = 0; i < numRows; i++)
+    {
+        result[i] = new StringBuilder();
+    }
+
+    int index = 0;
+    int step = 1;
+
+    foreach (char c in s)
+    {
+        result[index].Append(c);
+        if (index == 0)
+        {
+            step = 1;
+        }
+        else if (index == numRows - 1)
+        {
+            step = -1;
+        }
+        index += step;
+    }
+
+    var finalResult = new StringBuilder();
+    foreach (var sb in result)
+    {
+        finalResult.Append(sb);
+    }
+
+    return finalResult.ToString();
 
 }
 
