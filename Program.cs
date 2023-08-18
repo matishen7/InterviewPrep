@@ -9,7 +9,7 @@ string s = "123";
 string s2 = "-123";
 string s3 = "   123";
 string s4 = "   4193 with words";
-string s5 = "with words";
+string s5 = "with words 976";
 
 Console.WriteLine(MyAtoi(s));
 Console.WriteLine(MyAtoi(s2));
