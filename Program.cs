@@ -1,16 +1,21 @@
 ﻿
 using ConsoleApp1;
 using System.ComponentModel.DataAnnotations;
+using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
 string s = "123";
 string s2 = "-123";
 string s3 = "   123";
+string s4 = "   4193 with words";
+string s5 = "with words";
 
 Console.WriteLine(MyAtoi(s));
 Console.WriteLine(MyAtoi(s2));
 Console.WriteLine(MyAtoi(s3));
+Console.WriteLine(MyAtoi(s4));
+Console.WriteLine(MyAtoi(s5));
 
 static int MyAtoi(string s)
 {
@@ -22,6 +27,7 @@ static int MyAtoi(string s)
         sb.Remove(minusSign, 1);
 
     s = IgnoreLeadingZeros(sb.ToString());
+    s = RemoveAlphas(s);
     double pow = s.Length - 1.0;
     int result = 0;
     for (int i = 0; i < s.Length; i++)
@@ -63,6 +69,30 @@ static int CompareVersion(string version1, string version2)
     return 0;
 }
 
+static string RemoveAlphas(string s)
+{
+    HashSet<char> alphabeticSet = new HashSet<char>();
+    for (char c = 'A'; c <= 'Z'; c++)
+    {
+        alphabeticSet.Add(c);
+    }
+
+    for (char c = 'a'; c <= 'z'; c++)
+    {
+        alphabeticSet.Add(c);
+    }
+    alphabeticSet.Add('+');
+    var sb = new StringBuilder(s);
+    for(int i = 0; i < sb.Length;i++)
+    {
+        if (alphabeticSet.Contains(sb[i]))
+        {
+            sb.Remove(i, 1);
+            i--;
+        }
+    }
+    return sb.ToString().Trim();
+}
 
 static string IgnoreLeadingZeros(string s)
 {
