@@ -4,9 +4,35 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string version1 = "1.0.1", version2 = "1";
+string s = "123";
+string s2 = "-123";
+string s3 = "   123";
 
-Console.WriteLine(CompareVersion(version1, version2));
+Console.WriteLine(MyAtoi(s));
+Console.WriteLine(MyAtoi(s2));
+Console.WriteLine(MyAtoi(s3));
+
+static int MyAtoi(string s)
+{
+    int minusSign = -1;
+    s = s.Trim();
+    var sb = new StringBuilder(s);
+    minusSign = s.IndexOf('-');
+    if (minusSign != -1)
+        sb.Remove(minusSign, 1);
+
+    s = IgnoreLeadingZeros(sb.ToString());
+    double pow = s.Length - 1.0;
+    int result = 0;
+    for (int i = 0; i < s.Length; i++)
+    {
+        int digit = s[i] - '0';
+        double p = Math.Pow(10, pow);
+        result += digit * (int)p;
+        pow--;
+    }
+    return (minusSign != -1) ? (-1) * result : result;
+}
 
 static int CompareVersion(string version1, string version2)
 {
