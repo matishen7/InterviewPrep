@@ -5,17 +5,35 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string s = "123";
-string s2 = "-123";
-string s3 = "   123";
-string s4 = "   4193 with words";
-string s5 = "with words 976";
+int[] num1 = { 1, 2, 3 };
+int[] num2 = { 2, 4, 6 };
+Console.WriteLine(FindDifference(num1, num2));
 
-Console.WriteLine(MyAtoi(s));
-Console.WriteLine(MyAtoi(s2));
-Console.WriteLine(MyAtoi(s3));
-Console.WriteLine(MyAtoi(s4));
-Console.WriteLine(MyAtoi(s5));
+static IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
+{
+    var dic1 = new Dictionary<int, int>();
+    var dic2 = new Dictionary<int, int>();
+    for (int i = 0; i < nums1.Length; i++)
+        if (!dic1.ContainsKey(nums1[i]))
+            dic1.Add(nums1[i], i);
+    for (int i = 0; i < nums2.Length; i++)
+        dic2.Add(nums2[i], i);
+
+    var list1 = new List<int>();
+    var list2 = new List<int>();
+    for (int i = 0; i < nums1.Length; i++)
+    {
+        if (!dic2.ContainsKey(nums1[i]))
+            list1.Add(nums1[i]);
+    }
+    for (int i = 0; i < nums2.Length; i++)
+    {
+        if (!dic1.ContainsKey(nums2[i]))
+            list2.Add(nums2[i]);
+    }
+
+    return new List<IList<int>>() { list1, list2 };
+}
 
 static int MyAtoi(string s)
 {
@@ -83,7 +101,7 @@ static string RemoveAlphas(string s)
     }
     alphabeticSet.Add('+');
     var sb = new StringBuilder(s);
-    for(int i = 0; i < sb.Length;i++)
+    for (int i = 0; i < sb.Length; i++)
     {
         if (alphabeticSet.Contains(sb[i]))
         {
