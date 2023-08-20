@@ -17,18 +17,19 @@ static IList<IList<int>> FindDifference(int[] nums1, int[] nums2)
         if (!dic1.ContainsKey(nums1[i]))
             dic1.Add(nums1[i], i);
     for (int i = 0; i < nums2.Length; i++)
-        dic2.Add(nums2[i], i);
+        if (!dic2.ContainsKey(nums2[i]))
+            dic2.Add(nums2[i], i);
 
     var list1 = new List<int>();
     var list2 = new List<int>();
     for (int i = 0; i < nums1.Length; i++)
     {
-        if (!dic2.ContainsKey(nums1[i]))
+        if (!dic2.ContainsKey(nums1[i]) && !list1.Contains(nums1[i]))
             list1.Add(nums1[i]);
     }
     for (int i = 0; i < nums2.Length; i++)
     {
-        if (!dic1.ContainsKey(nums2[i]))
+        if (!dic1.ContainsKey(nums2[i]) && !list2.Contains(nums2[i]))
             list2.Add(nums2[i]);
     }
 
