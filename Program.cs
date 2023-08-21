@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] num1 = { 1, 2, 3 };
+int[] num1 = { 1, 2, 3, 2 };
 int[] num2 = { 2, 4, 6 };
-Console.WriteLine(FindDifference(num1, num2));
+Console.WriteLine(ProblemSet1.SumOfUnique(num1));
 

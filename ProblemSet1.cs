@@ -23,7 +23,7 @@ namespace ConsoleApp1
             foreach (var num in dic)
             {
                 var count = num.Value;
-                if (count < 1) sum += num.Key; 
+                if (count <= 1) sum += num.Key; 
             }
             return sum;
         }
