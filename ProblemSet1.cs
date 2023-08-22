@@ -9,6 +9,43 @@ namespace ConsoleApp1
 {
     internal class ProblemSet1
     {
+        public static int CalPoints(string[] operations)
+        {
+            Stack<int> stack = new Stack<int>();
+            for (int i = 0; i < operations.Length; i++)
+            {
+                if (operations[i].Equals("C")) stack.Pop();
+                else if (operations[i].Equals("D"))
+                {
+                    int op;
+                    if (stack.Count != 0)
+                    {
+                        op = stack.Peek();
+                        op *= 2;
+                        stack.Push(op);
+                    }
+                }
+                else if (operations[i].Equals("+"))
+                {
+                    int s = 0, count = 0, j = 0;
+                    while (count < 2)
+                    {
+                        s += stack.ElementAt(j);
+                        j++;
+                        count++;
+                    }
+                    stack.Push(s);
+
+                }
+                else
+                    stack.Push(Int32.Parse(operations[i]));
+            }
+            int sum = 0;
+            while (stack.Count > 0)
+                sum += stack.Pop();
+            return sum;
+
+        }
         public static int SumOfUnique(int[] nums)
         {
             var dic = new Dictionary<int, int>();
@@ -23,7 +60,7 @@ namespace ConsoleApp1
             foreach (var num in dic)
             {
                 var count = num.Value;
-                if (count <= 1) sum += num.Key; 
+                if (count <= 1) sum += num.Key;
             }
             return sum;
         }
