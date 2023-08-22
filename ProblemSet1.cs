@@ -9,6 +9,28 @@ namespace ConsoleApp1
 {
     internal class ProblemSet1
     {
+        public static string RemoveDuplicates(string s)
+        {
+            var stack = new Stack<char>();
+            for (int i = 0; i < s.Length; i++)
+            {
+
+                if (stack.Count != 0)
+                {
+                    var lastChar = stack.Peek();
+                    if (lastChar == s[i]) stack.Pop();
+                    else stack.Push(s[i]);
+                }
+                else stack.Push(s[i]);
+            }
+            string result = "";
+            while (stack.Count != 0)
+            {
+                result = stack.Pop() + result;
+            };
+            return result;
+        }
+
         public static int CalPoints(string[] operations)
         {
             Stack<int> stack = new Stack<int>();
