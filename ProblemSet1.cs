@@ -9,6 +9,36 @@ namespace ConsoleApp1
 {
     internal class ProblemSet1
     {
+
+        public static int MinLength(string s)
+        {
+            var stack = new Stack<char>();
+            for (int i = 0; i < s.Length; i++)
+            {
+
+                if (s[i] == 'B' && stack.Count != 0)
+                {
+                    var lastcc = stack.Peek();
+                    if (lastcc == 'A')
+                        stack.Pop();
+                    else stack.Push(s[i]);
+                }
+
+                else if (s[i] == 'D' && stack.Count != 0)
+                {
+                    var lastcc = stack.Peek();
+                    if (lastcc == 'C')
+                        stack.Pop();
+                    else stack.Push(s[i]);
+                }
+
+                else stack.Push(s[i]);
+            }
+
+            return stack.Count;
+
+        }
+
         public static string RemoveDuplicates(string s)
         {
             var stack = new Stack<char>();

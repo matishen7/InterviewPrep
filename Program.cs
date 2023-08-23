@@ -5,6 +5,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string num1 = "azxxzy";
-Console.WriteLine(ProblemSet1.RemoveDuplicates(num1));
+string num1 = "ACBBD";
+Console.WriteLine(ProblemSet1.MinLength(num1));
 
