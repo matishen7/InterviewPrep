@@ -5,6 +5,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-string num1 = "ACBBD";
-Console.WriteLine(ProblemSet1.MinLength(num1));
+int[][] grid = { 
+    new int[] { 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+    new int[] { 0,0,0,0,0,0,0,1,1,1,0,0,0 },
+    new int[] {0,1,1,0,1,0,0,0,0,0,0,0,0 },
+    new int[] {0,1,0,0,1,1,0,0,1,0,1,0,0 },
+    new int[] {0,1,0,0,1,1,0,0,1,1,1,0,0 },
+    new int[] {0,0,0,0,0,0,0,0,0,0,1,0,0 },
+    new int[] {0,0,0,0,0,0,0,1,1,1,0,0,0 },
+    new int[] {0,0,0,0,0,0,0,1,1,0,0,0,0 } };
+Console.WriteLine(ProblemSet1.MaxAreaOfIsland(grid));
 
