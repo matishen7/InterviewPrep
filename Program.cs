@@ -13,5 +13,5 @@ char[][] grid = {
 };
 
 
-Console.WriteLine(ProblemSet1.NumIslands(grid));
+Console.WriteLine(Arrays2D.NumIslands(grid));
 
