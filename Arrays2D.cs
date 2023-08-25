@@ -7,6 +7,58 @@
             new int[] {0, 1},
             new int[] {1, 0},
             new int[] {0, -1}};
+
+        public static void SetZeroes(int[][] matrix)
+        {
+            Queue<int[]> queue = new Queue<int[]>();
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    if (matrix[i][j] == 0) queue.Enqueue(new int[] { i, j });
+                }
+            }
+
+            while (queue.Count > 0)
+            {
+                var currentCoordinates = queue.Dequeue();
+                var currentRow = currentCoordinates[0];
+                var currentCol = currentCoordinates[1];
+                for (int j = 0; j < matrix[currentRow].Length; j++)
+                {
+                    matrix[currentRow][j] = 0;
+                }
+
+                for (int i = 0; i < matrix.Length; i++)
+                {
+                    matrix[i][currentCol] = 0;
+                }
+            };
+
+            Print2DArray(matrix);
+        }
+
+        public static void Print2DArray(int[][] matrix)
+        {
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    Console.Write(matrix[i][j] + "\t");
+                }
+                Console.WriteLine();
+            }
+        }
+
+
+        public static void SetZerosHorizontally(int[][] matrix, int i)
+        {
+            for (int j = 0; j < matrix.Length; j++)
+            {
+                matrix[i][j] = 0;
+            }
+        }
+
         public static int IslandPerimeter(int[][] grid)
         {
             Queue<int[]> queue = new Queue<int[]>();

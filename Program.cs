@@ -5,8 +5,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] nums = { -1, 1, 0, -3, 3 };
+int[][] matrix = {
+    new int[] {1, 1, 1},
+    new int[] {1, 0, 1},
+    new int[] {1, 1, 1}
+};
 
 
-Console.WriteLine(Arrays.ProductExceptSelf(nums));
+
+Arrays2D.SetZeroes(matrix);
 
