@@ -22,17 +22,14 @@ namespace ConsoleApp1
 
         public static int MaxProfit(int[] prices)
         {
+            int min = Int32.MaxValue;
             int profit = 0;
-            int min = prices[0];
-            int max = prices[prices.Length - 1];
-            int j = prices.Length - 1;
+
             for (int i = 0; i < prices.Length; i++)
             {
                 if (min > prices[i]) min = prices[i];
-                if (max < prices[j]) max = prices[j];
-                if (profit < max - min) profit = max - min;
-                j--;
-                if (j <= i) break;
+                int currProfit = prices[i] - min;
+                if (currProfit > profit) profit = currProfit;
             }
             return profit;
         }
