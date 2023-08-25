@@ -10,14 +10,12 @@
 
         public static void SetZeroes(int[][] matrix)
         {
-            Queue<int[]> queue = new Queue<int[]>();
-            for (int i = 0; i < matrix.Length; i++)
+            bool[][] seen = new bool[matrix.Length][];
+            for (var i = 0; i < matrix.Length; i++)
             {
-                for (int j = 0; j < matrix[i].Length; j++)
-                {
-                    if (matrix[i][j] == 0) queue.Enqueue(new int[] { i, j });
-                }
+                seen[i] = new bool[matrix[i].Length];
             }
+            Queue<int[]> queue = GetZerosCoordinates(matrix, seen);
 
             while (queue.Count > 0)
             {
@@ -36,6 +34,38 @@
             };
 
             Print2DArray(matrix);
+        }
+
+        private static Queue<int[]> GetZerosCoordinates(int[][] matrix, bool[][] seen)
+        {
+            Queue<int[]> queue = new Queue<int[]>();
+            Queue<int[]> zerosqueue = new Queue<int[]>();
+            queue.Enqueue(new int[] { 0, 0 });
+            seen[0][0] = true;
+            while (queue.Count > 0)
+            {
+                var currentCoordinates = queue.Dequeue();
+                var currentRow = currentCoordinates[0];
+                var currentCol = currentCoordinates[1];
+                if (matrix[currentRow][currentCol] == 0 && seen[currentRow][currentCol] != true) zerosqueue.Enqueue(new int[] { currentRow, currentCol });
+                seen[currentRow][currentCol] = true;
+
+                for (int k = 0; k < directions.Length; k++)
+                {
+
+                    var direction = directions[k];
+                    var nextRow = currentRow + direction[0];
+                    var nextCol = currentCol + direction[1];
+                    if (nextRow < 0 || nextRow >= matrix.Length || nextCol < 0 || nextCol >= matrix[0].Length)
+                        continue;
+
+                    if (seen[nextRow][nextCol] != true) queue.Enqueue(new int[] { nextRow, nextCol });
+
+                }
+
+            }
+
+            return zerosqueue;
         }
 
         public static void Print2DArray(int[][] matrix)
