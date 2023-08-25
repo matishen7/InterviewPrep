@@ -34,7 +34,7 @@ namespace ConsoleApp1
             return profit;
         }
 
-        public  static bool ContainsDuplicate(int[] nums)
+        public static bool ContainsDuplicate(int[] nums)
         {
             if (nums.Length == 0) return false;
             var set = new HashSet<int>();
@@ -45,6 +45,31 @@ namespace ConsoleApp1
             }
 
             return false;
+        }
+
+        public static int[] ProductExceptSelf(int[] nums)
+        {
+            int product = 1;
+            var left = new int[nums.Length];
+            left[0] = product;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                product = nums[i - 1] * left[i - 1];
+                left[i] = product;
+            }
+
+            var right = new int[nums.Length];
+            right[nums.Length - 1] = 1;
+            for (int i = nums.Length; i > 1; i--)
+            {
+                product = nums[i - 1] * right[i - 1];
+                right[i - 2] = product;
+            }
+            int[] answer = new int[nums.Length];
+            for (int i = 0; i < answer.Length;i++)
+                answer[i] = right[i] * left[i];
+
+            return answer;
         }
     }
 }
