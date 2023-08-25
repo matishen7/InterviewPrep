@@ -5,13 +5,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-char[][] grid = {
-    new char[] {'1','1','0','0','0'},
-    new char[] {'1','1','0','0','0'},
-    new char[] {'0','0','1','0','0'},
-    new char[] {'0','0','0','1','1'}
-};
+int[] nums = { 2, 7, 11, 15 };
 
 
-Console.WriteLine(Arrays2D.NumIslands(grid));
+Console.WriteLine(Arrays.twoSum(nums, 9));
 
