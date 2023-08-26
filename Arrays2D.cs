@@ -21,13 +21,13 @@ namespace ConsoleApp1
             while (list.Count < m * n)
             {
                 list.Add(matrix[currRow][currCol]);
-                matrix[currRow][currCol] = 1000;
+                matrix[currRow][currCol] = 1000;// set as seen
                 int nextRow = currRow + directions[currDirection][0];
                 int nextCol = currCol + directions[currDirection][1];
                 if (nextRow < 0 || nextRow >= m|| nextCol < 0 || nextCol >= n || matrix[nextRow][nextCol] == 1000)
-                    currDirection = (currDirection + 1) % 4;
+                    currDirection = (currDirection + 1) % 4;// change direction
 
-                currRow += directions[currDirection][0];
+                currRow += directions[currDirection][0]; //move to next element according to direction 
                 currCol += directions[currDirection][1];
             }
 
