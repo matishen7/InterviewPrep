@@ -5,9 +5,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] nums = { -1, 0, 1, 2, -1, -4 };
+int[][] matrix = {
+    new int[] {1, 2, 3},
+    new int[] {4, 5, 6},
+    new int[] {7, 8, 9}
+};
 
 
 
-Arrays1D.ThreeSum(nums);
+
+Arrays2D.SpiralOrder(matrix);
 

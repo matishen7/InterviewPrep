@@ -1,12 +1,38 @@
-﻿namespace ConsoleApp1
+﻿using System.Numerics;
+
+namespace ConsoleApp1
 {
     internal static class Arrays2D
     {
         private static int[][] directions = new int[][] {
-            new int[] {-1, 0},
             new int[] {0, 1},
             new int[] {1, 0},
-            new int[] {0, -1}};
+            new int[] {0, -1},
+            new int[] {-1, 0}};
+
+        public static IList<int> SpiralOrder(int[][] matrix)
+        {
+
+            var list = new List<int>();
+            int m = matrix.Length, n = matrix[0].Length;
+            int currRow = 0;
+            int currCol = 0;
+            var currDirection = 0;
+            while (list.Count < m * n)
+            {
+                list.Add(matrix[currRow][currCol]);
+                matrix[currRow][currCol] = 1000;
+                int nextRow = currRow + directions[currDirection][0];
+                int nextCol = currCol + directions[currDirection][1];
+                if (nextRow < 0 || nextRow >= m|| nextCol < 0 || nextCol >= n || matrix[nextRow][nextCol] == 1000)
+                    currDirection = (currDirection + 1) % 4;
+
+                currRow += directions[currDirection][0];
+                currCol += directions[currDirection][1];
+            }
+
+            return list;
+        }
 
         public static void SetZeroes(int[][] matrix)
         {
