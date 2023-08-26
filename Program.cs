@@ -5,13 +5,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[][] matrix = {
-    new int[] {1, 1, 1},
-    new int[] {1, 0, 1},
-    new int[] {1, 1, 1}
-};
+int[] nums = { -1, 0, 1, 2, -1, -4 };
 
 
 
-Arrays2D.SetZeroes(matrix);
+Arrays1D.ThreeSum(nums);
 

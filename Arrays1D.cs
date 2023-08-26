@@ -6,8 +6,40 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    internal class Arrays
+    internal class Arrays1D
     {
+        public static IList<IList<int>> ThreeSum(int[] arr)
+        {
+            var ans = new List<IList<int>>();
+            Array.Sort(arr);
+            int target = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (i > 0 && arr[i] == arr[i - 1]) continue;
+                int left = i + 1;
+                int right = arr.Length - 1;
+                while (left < right)
+                {
+                    if (arr[i] + arr[left] + arr[right] > target)
+                        right--;
+                    else if (arr[i] + arr[left] + arr[right] < target)
+                        left++;
+                    else
+                    {
+                        List<int> list = new List<int>();
+                        list.Add(arr[i]);
+                        list.Add(arr[left]);
+                        list.Add(arr[right]);
+                        ans.Add(list);
+                        left++;
+                        while (arr[left] == arr[left - 1] && left < right)
+                            left++;
+                    }
+                }
+            }
+            return ans;
+        }
+
         public static int[] twoSum(int[] arr, int target)
         {
             var dic = new Dictionary<int, int>();
@@ -66,7 +98,7 @@ namespace ConsoleApp1
                 right[i - 2] = product;
             }
             int[] answer = new int[nums.Length];
-            for (int i = 0; i < answer.Length;i++)
+            for (int i = 0; i < answer.Length; i++)
                 answer[i] = right[i] * left[i];
 
             return answer;

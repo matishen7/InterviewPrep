@@ -47,7 +47,7 @@
                 var currentCoordinates = queue.Dequeue();
                 var currentRow = currentCoordinates[0];
                 var currentCol = currentCoordinates[1];
-                if (matrix[currentRow][currentCol] == 0 && seen[currentRow][currentCol] != true) zerosqueue.Enqueue(new int[] { currentRow, currentCol });
+                if (matrix[currentRow][currentCol] == 0) zerosqueue.Enqueue(new int[] { currentRow, currentCol });
                 seen[currentRow][currentCol] = true;
 
                 for (int k = 0; k < directions.Length; k++)
