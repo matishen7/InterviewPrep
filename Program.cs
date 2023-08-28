@@ -5,10 +5,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] matrix = { -1, 0, 3, 5, 9, 12 };
+int[] matrix = { 4, 5, 6, 7, 0, 1, 2 };
 
 
 
 
-Console.WriteLine(Arrays1D.BinarySearch(matrix, 2));
+Console.WriteLine(Arrays1D.Search(matrix, 3 ));
 

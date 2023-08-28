@@ -8,6 +8,37 @@ namespace ConsoleApp1
 {
     internal class Arrays1D
     {
+        public static int Search(int[] nums, int target)
+        {
+            var arr1 = new List<int>();
+            var arr2 = new List<int>();
+            arr1.Add(nums[0]);
+            for (int i = 1; i < nums.Length - 1; i++)
+            {
+                if (nums[i] > nums[i - 1]) arr1.Add(nums[i]);
+                else break;
+            }
+
+            int c = arr1.Count;
+            for (int i = c; i < nums.Length; i++)
+            {
+                arr2.Add(nums[i]);
+            }
+
+            int index1 = -1;
+            int index2 = -1;
+
+            index1 = BinarySearch(arr1.ToArray(), target); 
+            index2 = BinarySearch(arr2.ToArray(), target);
+
+            if (index1 == -1 && index2 == -1) return -1;
+            else if (index1 == -1 && index2 != -1)
+            {
+                return arr1.Count + index2;
+            }
+
+            return index1;
+        }
 
         public static int BinarySearch(int[] nums, int target)
         {
