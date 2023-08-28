@@ -8,6 +8,23 @@ namespace ConsoleApp1
 {
     internal class Arrays1D
     {
+
+        public static int BinarySearch(int[] nums, int target)
+        {
+            return BS(nums, 0, nums.Length - 1, target);
+        }
+
+        public static int BS(int[] arr, int left, int right, int target)
+        {
+            if (right < left || right < 0 || left > arr.Length) return -1;
+            int mid = (left + right) / 2;
+            if (arr[mid] == target) return mid;
+            else if (arr[mid] < target)
+                return BS(arr, mid + 1, right, target);
+            else return BS(arr, left, mid - 1, target);
+            
+        }
+
         public static IList<IList<int>> ThreeSum(int[] arr)
         {
             var ans = new List<IList<int>>();

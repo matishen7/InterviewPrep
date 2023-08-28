@@ -5,14 +5,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[][] matrix = {
-    new int[] {1, 2, 3},
-    new int[] {4, 5, 6},
-    new int[] {7, 8, 9}
-};
+int[] matrix = { -1, 0, 3, 5, 9, 12 };
 
 
 
 
-Arrays2D.SpiralOrder(matrix);
+Console.WriteLine(Arrays1D.BinarySearch(matrix, 2));
 
