@@ -8,6 +8,23 @@ namespace ConsoleApp1
 {
     internal class Arrays1D
     {
+        public static int MaxArea(int[] height)
+        {
+            int maxArea = 0;
+            int left = 0;
+            int right = height.Length - 1;
+            while (left < right)
+            {
+                int side = Math.Min(height[left], height[right]);
+                int currArea = side * (right - left);
+                if (currArea > maxArea) maxArea = currArea;
+                if (height[left] < height[right]) left++;
+                else right--;
+            }
+
+            return maxArea;
+        }
+
         public static int Search(int[] nums, int target)
         {
             var arr1 = new List<int>();
