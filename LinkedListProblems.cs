@@ -8,6 +8,19 @@ namespace ConsoleApp1
 {
     public class LinkedListProblems
     {
+        public bool HasCycle(ListNode head)
+        {
+            var currentNode = head;
+            var set = new HashSet<int>();
+            while (currentNode != null)
+            {
+                if (set.Contains(currentNode.val)) return true;
+                set.Add(currentNode.val);
+                currentNode = currentNode.next;
+            }
+            return false;
+        }
+
         public static ListNode ReverseList(ListNode head)
         {
             PrintLinkedList(head);
