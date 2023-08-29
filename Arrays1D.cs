@@ -8,6 +8,19 @@ namespace ConsoleApp1
 {
     internal class Arrays1D
     {
+        public static int maxSubArray(int[] nums)
+        {
+            int[] maxSum = new int[nums.Length];
+            maxSum[0] = nums[0];
+            int max = maxSum[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                maxSum[i] = Math.Max(nums[i], nums[i] + maxSum[i - 1]);
+                if (max < maxSum[i]) max = maxSum[i];
+            }
+            return max;
+        }
+
         public static int MaxArea(int[] height)
         {
             int maxArea = 0;

@@ -5,10 +5,12 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] matrix = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+int[] matrix = { 1,2,3,4,5};
 
 
 
 
-Console.WriteLine(Arrays1D.MaxArea(matrix));
+var head = LinkedListProblems.FromArray(matrix);
+var result = LinkedListProblems.ReverseList(head);
+LinkedListProblems.PrintLinkedList(result);
 
