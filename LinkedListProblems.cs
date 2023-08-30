@@ -23,6 +23,7 @@ namespace ConsoleApp1
                     currentNode = currentNode.next;
                 }
             }
+            if (listResult.Count == 0) return null;
             var arrResult = listResult.ToArray();
             Array.Sort(arrResult);
             return FromArray(arrResult);
