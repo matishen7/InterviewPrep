@@ -8,14 +8,38 @@ namespace ConsoleApp1
 {
     public class LinkedListProblems
     {
+        public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
+        {
+            var arrResult = new int[100] ;
+            Array.Fill(arrResult, -1000);
+            var currentNode = list1;
+            int i = 0;
+            while (currentNode != null)
+            {
+                arrResult[i] = currentNode.val;
+                i++;
+                currentNode = currentNode.next;
+            }
+
+            currentNode= list2;
+            while (currentNode != null)
+            {
+                arrResult[i] = currentNode.val;
+                i++;
+                currentNode = currentNode.next;
+            }
+            Array.Sort(arrResult,0, i);
+            return FromArray(arrResult, i);
+
+        }
         public bool HasCycle(ListNode head)
         {
             var currentNode = head;
-            var set = new HashSet<int>();
+            var set = new HashSet<ListNode>();
             while (currentNode != null)
             {
-                if (set.Contains(currentNode.val)) return true;
-                set.Add(currentNode.val);
+                if (set.Contains(currentNode)) return true;
+                else set.Add(currentNode);
                 currentNode = currentNode.next;
             }
             return false;
@@ -41,6 +65,19 @@ namespace ConsoleApp1
             ListNode listSofar = new ListNode();
             ListNode prev = null;
             for (int i = arr.Length - 1; i >= 0; i--)
+            {
+                ListNode createdNode = new ListNode(arr[i], prev);
+                listSofar = createdNode;
+                prev = listSofar;
+            }
+            return listSofar;
+        }
+
+        public static ListNode FromArray(int[] arr, int length)
+        {
+            ListNode listSofar = new ListNode();
+            ListNode prev = null;
+            for (int i = length; i >= 0; i--)
             {
                 ListNode createdNode = new ListNode(arr[i], prev);
                 listSofar = createdNode;
