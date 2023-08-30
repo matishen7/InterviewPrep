@@ -8,10 +8,31 @@ namespace ConsoleApp1
 {
     public class LinkedListProblems
     {
+        public static ListNode MergeKLists(ListNode[] lists)
+        {
+            if (lists.Length == 0) return null;
+            var listResult = new List<int>();
+            for (int i = 0; i < lists.Length; i++)
+            {
+                ListNode currentNode;
+                if (lists[i] == null) continue; 
+                currentNode = lists[i];
+                while(currentNode != null)
+                {
+                    listResult.Add(currentNode.val);
+                    currentNode = currentNode.next;
+                }
+            }
+            var arrResult = listResult.ToArray();
+            Array.Sort(arrResult);
+            return FromArray(arrResult);
+
+        }
+
         public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
             if (list1 == null && list2 == null) return null;
-            var arrResult = new int[100] ;
+            var arrResult = new int[100];
             //Array.Fill(arrResult, -1000);
             var currentNode = list1;
             int i = 0;
@@ -22,14 +43,14 @@ namespace ConsoleApp1
                 currentNode = currentNode.next;
             }
 
-            currentNode= list2;
+            currentNode = list2;
             while (currentNode != null)
             {
                 arrResult[i] = currentNode.val;
                 i++;
                 currentNode = currentNode.next;
             }
-            Array.Sort(arrResult,0, i);
+            Array.Sort(arrResult, 0, i);
             return FromArray(arrResult, i);
 
         }
