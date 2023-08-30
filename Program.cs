@@ -5,15 +5,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] arr1 = { };
-int[] arr2 = { 1 };
-ListNode list1 = null;
-ListNode list2 = null;
+int[] arr1 = { 1 };
 
-ListNode[] lists = new ListNode[2];
-lists[0] = list1;
-lists[1] = list2;
-
-var result = LinkedListProblems.MergeKLists(lists);
+var head = LinkedListProblems.GetLinkedListFromArray(arr1);
+var result = LinkedListProblems.RemoveNthFromEnd(head, 1);
 LinkedListProblems.PrintLinkedList(result);
 

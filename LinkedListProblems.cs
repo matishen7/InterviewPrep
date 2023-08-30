@@ -8,6 +8,21 @@ namespace ConsoleApp1
 {
     public class LinkedListProblems
     {
+        public static ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            var currentNode = head;
+            var listArray = new List<int>();
+            while (currentNode != null)
+            {
+                listArray.Add(currentNode.val);
+                currentNode = currentNode.next;
+            }
+            if (listArray.Count == 0) return null;
+            int k = listArray.Count - n;
+            listArray.RemoveAt(k);
+            if (listArray.Count == 0) return null;
+            return GetLinkedListFromArray(listArray.ToArray());
+        }
         public static ListNode MergeKLists(ListNode[] lists)
         {
             if (lists.Length == 0) return null;
@@ -15,9 +30,9 @@ namespace ConsoleApp1
             for (int i = 0; i < lists.Length; i++)
             {
                 ListNode currentNode;
-                if (lists[i] == null) continue; 
+                if (lists[i] == null) continue;
                 currentNode = lists[i];
-                while(currentNode != null)
+                while (currentNode != null)
                 {
                     listResult.Add(currentNode.val);
                     currentNode = currentNode.next;
@@ -26,7 +41,7 @@ namespace ConsoleApp1
             if (listResult.Count == 0) return null;
             var arrResult = listResult.ToArray();
             Array.Sort(arrResult);
-            return FromArray(arrResult);
+            return GetLinkedListFromArray(arrResult);
 
         }
 
@@ -52,7 +67,7 @@ namespace ConsoleApp1
                 currentNode = currentNode.next;
             }
             Array.Sort(arrResult, 0, i);
-            return FromArray(arrResult, i);
+            return GetLinkedListFromArray(arrResult, i);
 
         }
         public bool HasCycle(ListNode head)
@@ -83,7 +98,7 @@ namespace ConsoleApp1
             return result;
         }
 
-        public static ListNode FromArray(int[] arr)
+        public static ListNode GetLinkedListFromArray(int[] arr)
         {
             ListNode listSofar = new ListNode();
             ListNode prev = null;
@@ -96,7 +111,7 @@ namespace ConsoleApp1
             return listSofar;
         }
 
-        public static ListNode FromArray(int[] arr, int length)
+        public static ListNode GetLinkedListFromArray(int[] arr, int length)
         {
             ListNode listSofar = new ListNode();
             ListNode prev = null;
