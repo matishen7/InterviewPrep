@@ -8,6 +8,32 @@ namespace ConsoleApp1
 {
     public class LinkedListProblems
     {
+        public static void ReorderList(ListNode head)
+        {
+            if (head == null) return;
+            var currentNode = head;
+            var listArray = new List<int>();
+            while (currentNode != null)
+            {
+                listArray.Add(currentNode.val);
+                currentNode = currentNode.next;
+            }
+
+            int left = 0, right = listArray.Count - 1;
+            var resultList = new List<int>();
+            while(left <= right)
+            {
+                if (left == right) { resultList.Add(listArray[left]); break; };
+                resultList.Add(listArray[left]);
+                resultList.Add(listArray[right]);
+                left++;
+                right--;
+            }
+
+            head = GetLinkedListFromArray(resultList.ToArray());
+            PrintLinkedList(head);
+        }
+
         public static ListNode RemoveNthFromEnd(ListNode head, int n)
         {
             var currentNode = head;
