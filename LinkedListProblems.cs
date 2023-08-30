@@ -10,8 +10,9 @@ namespace ConsoleApp1
     {
         public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
         {
+            if (list1 == null && list2 == null) return null;
             var arrResult = new int[100] ;
-            Array.Fill(arrResult, -1000);
+            //Array.Fill(arrResult, -1000);
             var currentNode = list1;
             int i = 0;
             while (currentNode != null)
