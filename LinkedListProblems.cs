@@ -17,7 +17,6 @@ namespace ConsoleApp1
                 listArray.Add(currentNode.val);
                 currentNode = currentNode.next;
             }
-            if (listArray.Count == 0) return null;
             int k = listArray.Count - n;
             listArray.RemoveAt(k);
             if (listArray.Count == 0) return null;
