@@ -15,6 +15,7 @@ namespace ConsoleApp1
         {
             var fc = FindCharacter(word[0], board);
             int currentRow = fc.i, currentColumn = fc.j;
+            if (currentRow == -1 && currentColumn == -1) return false;
             for (int i = 1; i < word.Length; i++)
             {
                 var currentChar = word[i];
