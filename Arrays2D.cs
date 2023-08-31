@@ -13,8 +13,9 @@ namespace ConsoleApp1
 
         public static bool Exist(char[][] board, string word)
         {
-            int currentRow = 0, currentColumn = 0;
-            for (int i = 0; i < word.Length; i++)
+            var fc = FindCharacter(word[0], board);
+            int currentRow = fc.i, currentColumn = fc.j;
+            for (int i = 1; i < word.Length; i++)
             {
                 var currentChar = word[i];
                 var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn);
@@ -27,12 +28,50 @@ namespace ConsoleApp1
 
         static (int i, int j) FindNextCharacter(char cc, char[][] matrix, int currentRow, int currentColumn)
         {
+            int m = matrix.Length, n = matrix[0].Length;
             for (int i = 0; i < directions.Length; i++)
             {
                 var currentDirection = directions[i];
                 var nextRow = currentRow + currentDirection[0];
                 var nextCol = currentColumn + currentDirection[1];
+                if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || matrix[nextRow][nextCol] == 1000) continue;
                 if (matrix[nextRow][nextCol] == cc) return (nextRow, nextCol);
+            }
+
+            return (-1, -1);
+        }
+
+        static (int i, int j) FindCharacter(char cc, char[][] matrix)
+        {
+            Queue<int[]> queue = new Queue<int[]>();
+
+            bool[][] seen = new bool[matrix.Length][];
+            for (var i = 0; i < matrix.Length; i++)
+            {
+                seen[i] = new bool[matrix[i].Length];
+            }
+
+
+
+            queue.Enqueue(new int[] { 0, 0 });
+            seen[0][0] = true;
+
+            while (queue.Count > 0)
+            {
+                var currentCoordinates = queue.Dequeue();
+                int currentRow = currentCoordinates[0];
+                int currentCol = currentCoordinates[1];
+                if (matrix[currentRow][currentCol] == cc) return (currentRow, currentCol);
+                for (int i = 0; i < directions.Length; i++)
+                {
+                    var currentDirection = directions[i];
+                    var nextRow = currentRow + currentDirection[0];
+                    var nextCol = currentCol + currentDirection[1];
+                    if (nextRow < 0 || nextRow >= matrix.Length || nextCol < 0 || nextCol >= matrix[currentRow].Length || seen[nextRow][nextCol] == true) continue;
+                    queue.Enqueue(new int[] { nextRow, nextCol });
+                    currentRow = nextRow;
+                    currentCol = nextCol;
+                }
             }
 
             return (-1, -1);
@@ -52,7 +91,7 @@ namespace ConsoleApp1
                 matrix[currRow][currCol] = 1000;// set as seen
                 int nextRow = currRow + directions[currDirection][0];
                 int nextCol = currCol + directions[currDirection][1];
-                if (nextRow < 0 || nextRow >= m|| nextCol < 0 || nextCol >= n || matrix[nextRow][nextCol] == 1000)
+                if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || matrix[nextRow][nextCol] == 1000)
                     currDirection = (currDirection + 1) % 4;// change direction
 
                 currRow += directions[currDirection][0]; //move to next element according to direction 
