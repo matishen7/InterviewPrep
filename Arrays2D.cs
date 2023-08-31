@@ -14,32 +14,47 @@ namespace ConsoleApp1
         public static bool Exist(char[][] board, string word)
         {
             var queue = FindCharacter(word[0], board);
-            bool[] result = new bool[word.Length];
-            if (queue.Count != 0) result[0] = true;
+            if (queue.Count == 0) return false;
             while (queue.Count > 0)
             {
+                bool[][] seen = new bool[board.Length][];
+                for (var i = 0; i < board.Length; i++)
+                {
+                    seen[i] = new bool[board[i].Length];
+                }
+
                 var coordinates = queue.Dequeue();
                 int currentRow = coordinates[0], currentColumn = coordinates[1];
+                bool[] result = new bool[word.Length];
+                seen[currentRow][currentColumn] = true;
 
+                result[0] = true;
                 for (int i = 1; i < word.Length; i++)
                 {
                     var currentChar = word[i];
-                    var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn);
-                    if (nextCharacterCoordinates.i != -1 && nextCharacterCoordinates.j != -1) result[i] = true;
-                    currentRow = nextCharacterCoordinates.i; currentColumn = nextCharacterCoordinates.j;
+                    var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn, seen);
+                    if (nextCharacterCoordinates.i != -1 && nextCharacterCoordinates.j != -1)
+                    {
+                        result[i] = true;
+                        currentRow = nextCharacterCoordinates.i; currentColumn = nextCharacterCoordinates.j;
+                        seen[currentRow][currentColumn] = true;
+                    }
                 }
 
+                var res = true;
+
+                for (int k = 0; k < result.Length; k++)
+                {
+                    if (result[k] == false) { res = false; break; }
+                }
+
+                if (res) return res;
             }
 
-            for (int k = 0; k < result.Length; k++)
-            {
-                if (result[k] == false) return false;
-            }
-
-            return true;
+            return false;
         }
 
-        static (int i, int j) FindNextCharacter(char cc, char[][] matrix, int currentRow, int currentColumn)
+        static (int i, int j) FindNextCharacter(char cc, char[][] matrix, int currentRow, int currentColumn, bool[][] seen)
         {
             int m = matrix.Length, n = matrix[0].Length;
             for (int i = 0; i < directions.Length; i++)
@@ -47,7 +62,7 @@ namespace ConsoleApp1
                 var currentDirection = directions[i];
                 var nextRow = currentRow + currentDirection[0];
                 var nextCol = currentColumn + currentDirection[1];
-                if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || matrix[nextRow][nextCol] == 1000) continue;
+                if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || seen[nextRow][nextCol] == true) continue;
                 if (matrix[nextRow][nextCol] == cc) return (nextRow, nextCol);
             }
 
@@ -77,7 +92,7 @@ namespace ConsoleApp1
                 var currentCoordinates = queue.Dequeue();
                 int currentRow = currentCoordinates[0];
                 int currentCol = currentCoordinates[1];
-                
+                seen[currentRow][currentCol] = true;
                 if (matrix[currentRow][currentCol] == cc) coordinates.Enqueue(new int[] { currentRow, currentCol });
                 for (int i = 0; i < directions.Length; i++)
                 {

@@ -5,14 +5,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-char[][] board = new char[][]
-{
-    new char[] { 'A', 'B', 'C', 'E' },
-    new char[] { 'S', 'F', 'C', 'S' },
-    new char[] { 'A', 'D', 'E', 'E' }
+char[][] jaggedArray = new char[][] {
+    new char[] { 'C', 'A', 'A' },
+    new char[] { 'A', 'A', 'A' },
+    new char[] { 'B', 'C', 'D' }
 };
 
-var word = "SEE";
+var word = "AAB";
 
-Console.WriteLine(Arrays2D.Exist(board, word));
+Console.WriteLine(Arrays2D.Exist(jaggedArray, word));
 
