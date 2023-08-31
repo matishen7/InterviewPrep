@@ -7,11 +7,12 @@ using static ConsoleApp1.BST;
 
 char[][] board = new char[][]
 {
-    new char[] {'A', 'B', 'C', 'E'},
-    new char[] {'S', 'F', 'C', 'S'},
-    new char[] {'A', 'D', 'E', 'E'}
+    new char[] { 'A', 'B', 'C', 'E' },
+    new char[] { 'S', 'F', 'C', 'S' },
+    new char[] { 'A', 'D', 'E', 'E' }
 };
-var word = "ABCCED";
+
+var word = "SEE";
 
 Console.WriteLine(Arrays2D.Exist(board, word));
 

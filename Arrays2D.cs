@@ -13,15 +13,27 @@ namespace ConsoleApp1
 
         public static bool Exist(char[][] board, string word)
         {
-            var fc = FindCharacter(word[0], board);
-            int currentRow = fc.i, currentColumn = fc.j;
-            if (currentRow == -1 && currentColumn == -1) return false;
-            for (int i = 1; i < word.Length; i++)
+            var queue = FindCharacter(word[0], board);
+            bool[] result = new bool[word.Length];
+            if (queue.Count != 0) result[0] = true;
+            while (queue.Count > 0)
             {
-                var currentChar = word[i];
-                var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn);
-                if (nextCharacterCoordinates.i == -1 && nextCharacterCoordinates.j == -1) return false;
-                currentRow = nextCharacterCoordinates.i; currentColumn = nextCharacterCoordinates.j;
+                var coordinates = queue.Dequeue();
+                int currentRow = coordinates[0], currentColumn = coordinates[1];
+
+                for (int i = 1; i < word.Length; i++)
+                {
+                    var currentChar = word[i];
+                    var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn);
+                    if (nextCharacterCoordinates.i != -1 && nextCharacterCoordinates.j != -1) result[i] = true;
+                    currentRow = nextCharacterCoordinates.i; currentColumn = nextCharacterCoordinates.j;
+                }
+
+            }
+
+            for (int k = 0; k < result.Length; k++)
+            {
+                if (result[k] == false) return false;
             }
 
             return true;
@@ -42,9 +54,10 @@ namespace ConsoleApp1
             return (-1, -1);
         }
 
-        static (int i, int j) FindCharacter(char cc, char[][] matrix)
+        static Queue<int[]> FindCharacter(char cc, char[][] matrix)
         {
             Queue<int[]> queue = new Queue<int[]>();
+            Queue<int[]> coordinates = new Queue<int[]>();
 
             bool[][] seen = new bool[matrix.Length][];
             for (var i = 0; i < matrix.Length; i++)
@@ -57,12 +70,15 @@ namespace ConsoleApp1
             queue.Enqueue(new int[] { 0, 0 });
             seen[0][0] = true;
 
+
+
             while (queue.Count > 0)
             {
                 var currentCoordinates = queue.Dequeue();
                 int currentRow = currentCoordinates[0];
                 int currentCol = currentCoordinates[1];
-                if (matrix[currentRow][currentCol] == cc) return (currentRow, currentCol);
+                
+                if (matrix[currentRow][currentCol] == cc) coordinates.Enqueue(new int[] { currentRow, currentCol });
                 for (int i = 0; i < directions.Length; i++)
                 {
                     var currentDirection = directions[i];
@@ -72,10 +88,11 @@ namespace ConsoleApp1
                     queue.Enqueue(new int[] { nextRow, nextCol });
                     currentRow = nextRow;
                     currentCol = nextCol;
+                    seen[currentRow][currentCol] = true;
                 }
             }
 
-            return (-1, -1);
+            return coordinates;
         }
 
         public static IList<int> SpiralOrder(int[][] matrix)
