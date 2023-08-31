@@ -5,9 +5,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-int[] arr1 = { 1, 2, 3, 4 };
+char[][] board = new char[][]
+{
+    new char[] {'A', 'B', 'C', 'E'},
+    new char[] {'S', 'F', 'C', 'S'},
+    new char[] {'A', 'D', 'E', 'E'}
+};
+var word = "ABCCED";
 
-var head = LinkedListProblems.GetLinkedListFromArray(arr1);
-LinkedListProblems.ReorderList(head);
-//LinkedListProblems.PrintLinkedList(result);
+Console.WriteLine(Arrays2D.Exist(board, word));
 

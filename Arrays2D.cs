@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Numerics;
 
 namespace ConsoleApp1
 {
@@ -9,6 +10,33 @@ namespace ConsoleApp1
             new int[] {1, 0},
             new int[] {0, -1},
             new int[] {-1, 0}};
+
+        public static bool Exist(char[][] board, string word)
+        {
+            int currentRow = 0, currentColumn = 0;
+            for (int i = 0; i < word.Length; i++)
+            {
+                var currentChar = word[i];
+                var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn);
+                if (nextCharacterCoordinates.i == -1 && nextCharacterCoordinates.j == -1) return false;
+                currentRow = nextCharacterCoordinates.i; currentColumn = nextCharacterCoordinates.j;
+            }
+
+            return true;
+        }
+
+        static (int i, int j) FindNextCharacter(char cc, char[][] matrix, int currentRow, int currentColumn)
+        {
+            for (int i = 0; i < directions.Length; i++)
+            {
+                var currentDirection = directions[i];
+                var nextRow = currentRow + currentDirection[0];
+                var nextCol = currentColumn + currentDirection[1];
+                if (matrix[nextRow][nextCol] == cc) return (nextRow, nextCol);
+            }
+
+            return (-1, -1);
+        }
 
         public static IList<int> SpiralOrder(int[][] matrix)
         {
