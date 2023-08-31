@@ -32,13 +32,20 @@ namespace ConsoleApp1
                 for (int i = 1; i < word.Length; i++)
                 {
                     var currentChar = word[i];
-                    var nextCharacterCoordinates = FindNextCharacter(currentChar, board, currentRow, currentColumn, seen);
-                    if (nextCharacterCoordinates.i != -1 && nextCharacterCoordinates.j != -1)
+                    var nextCharacterCoordinatesQueue = FindNextCharacters(currentChar, board, currentRow, currentColumn, seen);
+                    while (nextCharacterCoordinatesQueue.Count > 0)
                     {
-                        result[i] = true;
-                        currentRow = nextCharacterCoordinates.i; currentColumn = nextCharacterCoordinates.j;
-                        seen[currentRow][currentColumn] = true;
+                        var nextCharacterCoordinates = nextCharacterCoordinatesQueue.Dequeue();
+                        var nextCharacterRow = nextCharacterCoordinates[0];
+                        var nextCharacterColumn = nextCharacterCoordinates[1];
+                        if (nextCharacterRow != -1 && nextCharacterColumn != -1)
+                        {
+                            result[i] = true;
+                            currentRow = nextCharacterRow; currentColumn = nextCharacterColumn;
+                            seen[currentRow][currentColumn] = true;
+                        }
                     }
+                    
                 }
 
                 var res = true;
@@ -54,8 +61,9 @@ namespace ConsoleApp1
             return false;
         }
 
-        static (int i, int j) FindNextCharacter(char cc, char[][] matrix, int currentRow, int currentColumn, bool[][] seen)
+        static Queue<int[]> FindNextCharacters(char cc, char[][] matrix, int currentRow, int currentColumn, bool[][] seen)
         {
+            Queue<int[]> queue = new Queue<int[]>();
             int m = matrix.Length, n = matrix[0].Length;
             for (int i = 0; i < directions.Length; i++)
             {
@@ -63,10 +71,10 @@ namespace ConsoleApp1
                 var nextRow = currentRow + currentDirection[0];
                 var nextCol = currentColumn + currentDirection[1];
                 if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || seen[nextRow][nextCol] == true) continue;
-                if (matrix[nextRow][nextCol] == cc) return (nextRow, nextCol);
+                if (matrix[nextRow][nextCol] == cc) queue.Enqueue(new int[] { nextRow, nextCol });
             }
 
-            return (-1, -1);
+            return queue;
         }
 
         static Queue<int[]> FindCharacter(char cc, char[][] matrix)

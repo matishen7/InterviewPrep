@@ -51,6 +51,7 @@ namespace ConsoleApp1
         public static ListNode MergeKLists(ListNode[] lists)
         {
             if (lists.Length == 0) return null;
+            else if (lists.Length == 1 && lists[0] == null) return null;
             var listResult = new List<int>();
             for (int i = 0; i < lists.Length; i++)
             {

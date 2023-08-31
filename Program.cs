@@ -5,13 +5,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using static ConsoleApp1.BST;
 
-char[][] jaggedArray = new char[][] {
-    new char[] { 'C', 'A', 'A' },
-    new char[] { 'A', 'A', 'A' },
-    new char[] { 'B', 'C', 'D' }
-};
+int[] arr = { 1, 1, 1, 2, 2, 3 };
 
-var word = "AAB";
 
-Console.WriteLine(Arrays2D.Exist(jaggedArray, word));
+Console.WriteLine(Heaps.TopKFrequent(arr, 2));
 
