@@ -12,7 +12,7 @@ namespace ConsoleApp1
         private PriorityQueue<int> list;
         public MedianFinder()
         {
-            list = new PriorityQueue<int>((a, b) => a.CompareTo(b));
+            list = new PriorityQueue<int>((a, b) => b.CompareTo(a));
         }
 
         public void AddNum(int num)

@@ -26,7 +26,7 @@ class PriorityQueue<T>
         {
             int parentIndex = (currentIndex - 1) / 2;
 
-            if (comparison(data[currentIndex], data[parentIndex]) <= 0) // Change comparison condition
+            if (comparison(data[currentIndex], data[parentIndex]) >= 0)
                 break;
 
             T temp = data[currentIndex];
@@ -52,24 +52,24 @@ class PriorityQueue<T>
         {
             int leftChildIndex = 2 * currentIndex + 1;
             int rightChildIndex = 2 * currentIndex + 2;
-            int largestChildIndex = -1; // Change variable name
+            int smallestChildIndex = -1;
 
             if (leftChildIndex < data.Count)
             {
-                largestChildIndex = leftChildIndex;
-                if (rightChildIndex < data.Count && comparison(data[rightChildIndex], data[leftChildIndex]) > 0) // Change comparison condition
+                smallestChildIndex = leftChildIndex;
+                if (rightChildIndex < data.Count && comparison(data[rightChildIndex], data[leftChildIndex]) < 0)
                 {
-                    largestChildIndex = rightChildIndex;
+                    smallestChildIndex = rightChildIndex;
                 }
             }
 
-            if (largestChildIndex >= 0 && comparison(data[largestChildIndex], data[currentIndex]) > 0) // Change comparison condition
+            if (smallestChildIndex >= 0 && comparison(data[smallestChildIndex], data[currentIndex]) < 0)
             {
                 T temp = data[currentIndex];
-                data[currentIndex] = data[largestChildIndex];
-                data[largestChildIndex] = temp;
+                data[currentIndex] = data[smallestChildIndex];
+                data[smallestChildIndex] = temp;
 
-                currentIndex = largestChildIndex;
+                currentIndex = smallestChildIndex;
             }
             else
             {
