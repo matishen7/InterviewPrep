@@ -9,15 +9,18 @@ namespace ConsoleApp1
     public class MedianFinder
     {
         private double sum = 0;
-        private PriorityQueue<int> list;
+        private List<int> list;
         public MedianFinder()
         {
-            list = new PriorityQueue<int>((a, b) => b.CompareTo(a));
+            list = new List<int>();
         }
 
         public void AddNum(int num)
         {
-            list.Enqueue(num);
+            list.Add(num);
+            var arr = list.ToArray();
+            Array.Sort(arr);
+            list = arr.ToList();
             sum += num;
         }
 
@@ -28,7 +31,7 @@ namespace ConsoleApp1
                 return sum/list.Count;
             }
 
-            else return list.GetElementAt(list.Count/2);
+            else return list[(list.Count /2)];
         }
     }
 }
