@@ -8,6 +8,27 @@ namespace ConsoleApp1
 {
     internal class InterVals
     {
+
+        public  static int EraseOverlapIntervals(int[][] intervals)
+        {
+            if (intervals.Length <= 1) return 0;
+            intervals = intervals.OrderBy(innerArr => innerArr[0]).ToArray();
+            int result = 0;
+            int prevEnd = intervals[0][1];
+            for (int i = 1; i < intervals.Length; i++)
+            {
+                var start = intervals[i][0];
+                if (start >= prevEnd) prevEnd = intervals[i][1];
+                else
+                {
+                    result++;
+                    prevEnd = Math.Min(prevEnd, intervals[i][1]);
+                }
+            }
+
+            return result;
+        }
+
         public static int[][] Merge(int[][] intervals)
         {
             if (intervals.Length <= 1) return intervals;
