@@ -16,24 +16,28 @@ namespace ConsoleApp1
             for (int i = 0; i < s.Length; i++)
             {
                 var cc = s[i];
-                if (cc == '{' || cc == '[' || cc == '(') stack.Push(cc);
-                else if (cc == '}')
+                if (stack.Count == 0) stack.Push(cc);
+                else
                 {
-                    var last = stack.Peek();
-                    if (last == '{') stack.Pop();
-                    else stack.Push(last);
-                }
-                else if (cc == ']')
-                {
-                    var last = stack.Peek();
-                    if (last == '[') stack.Pop();
-                    else stack.Push(last);
-                }
-                else if (cc == ')')
-                {
-                    var last = stack.Peek();
-                    if (last == '(') stack.Pop();
-                    else stack.Push(last);
+                    if (cc == '{' || cc == '[' || cc == '(') stack.Push(cc);
+                    else if (cc == '}')
+                    {
+                        var last = stack.Peek();
+                        if (last == '{') stack.Pop();
+                        else stack.Push(last);
+                    }
+                    else if (cc == ']')
+                    {
+                        var last = stack.Peek();
+                        if (last == '[') stack.Pop();
+                        else stack.Push(last);
+                    }
+                    else if (cc == ')')
+                    {
+                        var last = stack.Peek();
+                        if (last == '(') stack.Pop();
+                        else stack.Push(last);
+                    }
                 }
             }
 
