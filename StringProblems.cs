@@ -8,6 +8,22 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static bool IsAnagram(string s, string t)
+        {
+            if (s.Length != t.Length) return false;
+            var s1 = s.ToArray();
+            var t1 = t.ToArray();
+            Array.Sort(s1);
+            Array.Sort(t1);
+
+            for (int i = 0; i < s1.Length; i++)
+            {
+                if (s1[i] != t1[i]) return false;
+            }
+
+            return true;
+        }
+
         public static bool IsPalindrome(string s)
         {
             if (string.IsNullOrEmpty(s)) return true;
@@ -17,7 +33,7 @@ namespace ConsoleApp1
 
             result = result.ToLower();
             Console.WriteLine(result);
-            
+
             int left = 0;
             int right = result.Length - 1;
             while (left < right)
