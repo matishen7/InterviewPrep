@@ -38,7 +38,7 @@ namespace ConsoleApp1
                     if (image[nextRow][nextCol] == startingColor) queue.Enqueue(new int[] { nextRow, nextCol });
                 }
             }
-            
+            Print2DArray(image);
             return image;
         }
 
