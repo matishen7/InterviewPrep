@@ -273,7 +273,7 @@ namespace ConsoleApp1
             return sb.ToString();
         }
 
-        static bool SameTree(Node node1, Node node2)
+        static bool SameTree(TreeNode node1, TreeNode node2)
         {
             var bst = new BST();
             var list1 = bst.BFS(node1);

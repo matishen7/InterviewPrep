@@ -8,19 +8,19 @@ namespace ConsoleApp1
 {
     public class BST
     {
-        public class Node
+        public class TreeNode
         {
             public int value;
-            public Node left;
-            public Node right;
+            public TreeNode left;
+            public TreeNode right;
 
-            public Node(int value)
+            public TreeNode(int value)
             {
                 this.value = value;
                 this.left = null;
                 this.right = null;
             }
-            public Node(int val = 0, Node left = null, Node right = null)
+            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
             {
                 this.value = val;
                 this.left = left;
@@ -30,15 +30,15 @@ namespace ConsoleApp1
 
         
 
-        public List<int> BFS(Node node)
+        public List<int> BFS(TreeNode node)
         {
             var list = new List<int>();
             Console.WriteLine("***BFS of Binary Tree***");
-            Queue<Node> q = new Queue<Node>();
+            Queue<TreeNode> q = new Queue<TreeNode>();
             q.Enqueue(node);
             while (q.Count > 0)
             {
-                Node currentNode = q.Dequeue();
+                TreeNode currentNode = q.Dequeue();
                 list.Add(currentNode.value);
                 if (currentNode.left != null) q.Enqueue(currentNode.left);
                 if (currentNode.right != null) q.Enqueue(currentNode.right);
