@@ -11,6 +11,37 @@ namespace ConsoleApp1
             new int[] {0, -1},
             new int[] {-1, 0}};
 
+        public static int[][] FloodFill(int[][] image, int sr, int sc, int color)
+        {
+            bool[][] seen = new bool[image.Length][];
+            for (var i = 0; i < image.Length; i++)
+            {
+                seen[i] = new bool[image[i].Length];
+            }
+
+            Queue<int[]> queue = new Queue<int[]>();
+            int m = image.Length, n = image[0].Length;
+            int startingColor = image[sr][sc];
+            queue.Enqueue(new int[] { sr, sc });
+            while (queue.Count > 0)
+            {
+                var coordinates = queue.Dequeue();
+                int currentRow = coordinates[0], currentColumn = coordinates[1];
+                seen[currentRow][currentColumn] = true;
+                image[currentRow][currentColumn] = color;
+                for (int i = 0; i < directions.Length; i++)
+                {
+                    var currentDirection = directions[i];
+                    var nextRow = currentRow + currentDirection[0];
+                    var nextCol = currentColumn + currentDirection[1];
+                    if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || seen[nextRow][nextCol] == true) continue;
+                    if (image[nextRow][nextCol] == startingColor) queue.Enqueue(new int[] { nextRow, nextCol });
+                }
+            }
+            
+            return image;
+        }
+
         public static bool Exist(char[][] board, string word)
         {
             var queue = FindCharacter(word[0], board);
@@ -45,7 +76,7 @@ namespace ConsoleApp1
                             seen[currentRow][currentColumn] = true;
                         }
                     }
-                    
+
                 }
 
                 var res = true;
