@@ -28,5 +28,25 @@ namespace ConsoleApp1
 
             return root;
         }
+
+        public static bool isBalanced(TreeNode root)
+        {
+            if (root == null) return true;
+            return Balanced(root);
+        }
+
+        private static bool Balanced(TreeNode root)
+        {
+            int lh = MaxHeight(root.left);
+            int rh = MaxHeight(root.right);
+            if (Math.Abs(lh - rh) <= 1 && Balanced(root.left) && Balanced(root.right)) return true;
+            return false;
+        }
+
+        private static int MaxHeight(TreeNode root)
+        {
+            if (root == null) return 0;
+            return 1 + Math.Max(MaxHeight(root.left), MaxHeight(root.right));
+        }
     }
 }
