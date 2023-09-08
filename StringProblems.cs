@@ -8,6 +8,38 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static int LongestPalindrome(string s)
+        {
+            var map = new Dictionary<char, int>();
+            foreach (char c in s)
+            {
+                if (map.ContainsKey(c))
+                    map[c]++;
+                else map.Add(c, 1);
+            }
+
+            bool one = false;
+            int maxCount = 0;
+
+            foreach (var keyValue in map)
+            {
+                var value = keyValue.Value;
+                if (value % 2 == 0) maxCount += value;
+                else
+                {
+                    var wholeValue = value - 1;
+                    maxCount += wholeValue;
+                    if (one == false)
+                    {
+                        maxCount++;
+                        one = true;
+                    }
+                }
+
+            }
+            return maxCount;
+
+        }
         public static bool IsAnagram(string s, string t)
         {
             if (s.Length != t.Length) return false;
