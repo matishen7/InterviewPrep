@@ -8,6 +8,21 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static string longestCommonPrefix(string[] strs)
+        {
+            if (strs.Length == 1) return strs[0];
+            var prefix = strs[0];
+            for (int i = 1; i < strs.Length; i++)
+            {
+                while (strs[i].IndexOf(prefix) != 0)
+                {
+                    prefix = prefix.Substring(0, prefix.Length - 1);
+                    if (string.IsNullOrEmpty(prefix)) return "";
+                }
+            }
+            return prefix;
+        }
+
         public static int LongestPalindrome(string s)
         {
             var map = new Dictionary<char, int>();
