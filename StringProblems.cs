@@ -8,6 +8,52 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static IList<int> FindAnagrams(string s, string p)
+        {
+            if (p.Length > s.Length) return new List<int>();
+            var list = new List<int>();
+            for (int i = 0; i <= s.Length - p.Length; i++)
+            {
+                var currentStr = s.Substring(i, p.Length);
+                if (IsAnagrams(currentStr, p))
+                    list.Add(i);
+            }
+
+            return list;
+        }
+
+        public static bool IsAnagrams(string s, string t)
+        {
+
+            if (s == null || t == null || s == "" || t == "")
+            {
+                return false;
+            }
+            int[] arr = new int[127];
+
+            foreach (char c in s.ToArray())
+            {
+
+                arr[c]++;
+            }
+
+            foreach (char c in t.ToArray())
+            {
+
+                arr[c]--;
+            }
+
+            foreach (int count in arr)
+            {
+                if (count > 0 || count < 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         public static string longestCommonPrefix(string[] strs)
         {
             if (strs.Length == 1) return strs[0];
