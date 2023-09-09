@@ -8,6 +8,31 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+
+        public static IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            var result = new List<IList<string>>();
+            if (strs.Length == 0) return result;
+            foreach (var str in strs)
+            {
+                if (result.Count == 0) result.Add(new List<string>() { str });
+                else
+                {
+                    bool found = false;
+                    for (int i = 0; i < result.Count; i++)
+                    {
+                        var firstStr = result[i][0];
+                        if (IsAnagrams(str, firstStr))
+                        {
+                            result[i].Add(str); found = true; break;
+                        }
+                    }
+                    if (!found) result.Add(new List<string>() { str });
+                }
+            }
+            return result;
+        }
+
         public static IList<int> FindAnagrams(string s, string p)
         {
             if (p.Length > s.Length) return new List<int>();
@@ -25,10 +50,6 @@ namespace ConsoleApp1
         public static bool IsAnagrams(string s, string t)
         {
 
-            if (s == null || t == null || s == "" || t == "")
-            {
-                return false;
-            }
             int[] arr = new int[127];
 
             foreach (char c in s.ToArray())
