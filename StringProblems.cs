@@ -11,26 +11,18 @@ namespace ConsoleApp1
 
         public static IList<IList<string>> GroupAnagrams(string[] strs)
         {
-            var result = new List<IList<string>>();
-            if (strs.Length == 0) return result;
+            var result = new Dictionary<string, IList<string>>();
+            if (strs.Length == 0) return result.Values.ToList();
             foreach (var str in strs)
             {
-                if (result.Count == 0) result.Add(new List<string>() { str });
-                else
-                {
-                    bool found = false;
-                    for (int i = 0; i < result.Count; i++)
-                    {
-                        var firstStr = result[i][0];
-                        if (IsAnagrams(str, firstStr))
-                        {
-                            result[i].Add(str); found = true; break;
-                        }
-                    }
-                    if (!found) result.Add(new List<string>() { str });
-                }
+                var strArray = str.ToCharArray();
+                Array.Sort(strArray);
+                var sortedStr = new string(strArray);
+                if (result.ContainsKey(sortedStr)) result[sortedStr].Add(str);
+                else result.Add(sortedStr, new List<string>() { str });
+
             }
-            return result;
+            return result.Values.ToList();
         }
 
         public static IList<int> FindAnagrams(string s, string p)
