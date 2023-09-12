@@ -138,6 +138,8 @@ namespace ConsoleApp1
             return true;
         }
 
+       
+
         public static string longestCommonPrefix(string[] strs)
         {
             if (strs.Length == 1) return strs[0];
@@ -292,7 +294,7 @@ namespace ConsoleApp1
                 for (int j = 0; j <= s.Length - w; j++)
                 {
                     var currentStr = s.Substring(j, w);
-                    if (ContainsAllchars(currentStr, t)) { return currentStr; }
+                    if (ContainsAllChars(currentStr, t)) { return currentStr; }
                 }
 
                 w++;
@@ -303,12 +305,25 @@ namespace ConsoleApp1
 
         }
 
-        public static bool ContainsAllchars(string str, string t)
+        public static bool ContainsAllChars(string s, string t)
         {
-            for (int i = 0; i < t.Length; i++)
+
+            int[] arr = new int[127];
+
+            foreach (char c in s.ToArray())
             {
-                if (!str.Contains(t[i])) return false;
+
+                arr[c]++;
             }
+
+            foreach (char c in t.ToArray())
+            {
+
+                arr[c]--;
+            }
+
+            foreach (char c in t.ToArray())
+                if (arr[c] < 0) return false;
 
             return true;
         }
