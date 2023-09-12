@@ -10,7 +10,8 @@ namespace ConsoleApp1
     {
         public static string LongestPalindromes(string s)
         {
-            string result = "";
+            if (s.Length == 1) return s.Substring(0,1);
+            string result = s.Substring(0,1);
             int resLen = 1;
             for (int i = 0; i < s.Length; i++)
             {
