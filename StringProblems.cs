@@ -8,6 +8,67 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static int CharacterReplacement(string s, int k)
+        {
+            var map = new Dictionary<char, int>()
+            {
+                { 'A', 0 },
+                { 'B', 0 },
+                { 'C', 0 },
+                { 'D', 0 },
+                { 'E', 0 },
+                { 'F', 0 },
+                { 'G', 0 },
+                { 'H', 0 },
+                { 'I', 0 },
+                { 'J', 0 },
+                { 'K', 0 },
+                { 'L', 0 },
+                { 'M', 0 },
+                { 'N', 0 },
+                { 'O', 0 },
+                { 'P', 0 },
+                { 'Q', 0 },
+                { 'R', 0 },
+                { 'S', 0 },
+                { 'T', 0 },
+                { 'U', 0 },
+                { 'V', 0 },
+                { 'W', 0 },
+                { 'X', 0 },
+                { 'Y', 0 },
+                { 'Z', 0 },
+            };
+            int result = 0; int max = 0;
+            int l = 0, r = 0;
+            while (r < s.Length)
+            {
+                char c = s[r];
+                map[c]++;
+                max = Math.Max(max, map[c]);
+                while ((r - l + 1) - max > k)
+                {
+                    char cl = s[l];
+                    map[cl]--;
+                    l++;
+                }
+                result = Math.Max(result, r - l + 1);
+                r++;
+            }
+            return result;
+        }
+
+        public static int MostFreqChar(Dictionary<char, int> map)
+        {
+            int result = 0;
+            foreach (var keyValue in map)
+            {
+                var value = keyValue.Value;
+                if (result < value) result = value;
+            }
+            return result;
+        }
+
         public static int CountSubstrings(string s)
         {
             int count = 0;
@@ -39,8 +100,8 @@ namespace ConsoleApp1
 
         public static string LongestPalindromes(string s)
         {
-            if (s.Length == 1) return s.Substring(0,1);
-            string result = s.Substring(0,1);
+            if (s.Length == 1) return s.Substring(0, 1);
+            string result = s.Substring(0, 1);
             int resLen = 1;
             for (int i = 0; i < s.Length; i++)
             {
@@ -138,7 +199,7 @@ namespace ConsoleApp1
             return true;
         }
 
-       
+
 
         public static string longestCommonPrefix(string[] strs)
         {
@@ -287,21 +348,37 @@ namespace ConsoleApp1
 
         public static string MinWindow(string s, string t)
         {
-            if (t.Length > s.Length) return "";
-            int w = t.Length;
-            for (int i = 0; i < s.Length; i++)
+            if (s.Length == 0 || t.Length == 0) return "";
+
+            int[] charCount = new int[128];  // Assume ASCII
+            foreach (char c in t) charCount[c]++;
+
+            int left = 0, right = 0, required = t.Length;
+            int minLength = int.MaxValue, minStart = 0;
+
+            while (right < s.Length)
             {
-                for (int j = 0; j <= s.Length - w; j++)
+                if (charCount[s[right]] > 0) required--;
+                charCount[s[right]]--;
+
+                while (required == 0)
                 {
-                    var currentStr = s.Substring(j, w);
-                    if (ContainsAllChars(currentStr, t)) { return currentStr; }
+                    if (right - left < minLength)
+                    {
+                        minLength = right - left;
+                        minStart = left;
+                    }
+
+                    charCount[s[left]]++;
+                    if (charCount[s[left]] > 0) required++;
+                    left++;
                 }
 
-                w++;
-
+                right++;
             }
 
-            return "";
+            if (minLength == int.MaxValue) return "";
+            return s.Substring(minStart, minLength + 1);
 
         }
 
