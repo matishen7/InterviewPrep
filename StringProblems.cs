@@ -8,6 +8,35 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static int CountSubstrings(string s)
+        {
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                int left;
+                int right;
+
+                left = i;
+                right = i;
+                while (left >= 0 && right < s.Length && s[left] == s[right])
+                {
+                    count++;
+                    left = left - 1;
+                    right = right + 1;
+                }
+
+                left = i;
+                right = i + 1;
+                while (left >= 0 && right < s.Length && s[left] == s[right])
+                {
+                    count++;
+                    left = left - 1;
+                    right = right + 1;
+                }
+            }
+            return count;
+        }
+
         public static string LongestPalindromes(string s)
         {
             if (s.Length == 1) return s.Substring(0,1);
