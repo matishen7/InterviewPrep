@@ -14,4 +14,4 @@ new int[] { 3 },
 new int[] { 4,7 },
 new int[] { 6 },
 new int[] { 2 } };
-GraphProblems.GraphAdjacencyListBFS(graph);
+GraphProblems.GraphTraversalDFS(graph);

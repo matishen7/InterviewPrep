@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     internal class GraphProblems
     {
-        public static void GraphAdjacencyListBFS(int[][] graph)
+        public static void GraphTraversalBFS(int[][] graph)
         {
             Queue<int[]> queue = new Queue<int[]>();
             var seen = new bool[graph.Length];
@@ -28,6 +28,24 @@ namespace ConsoleApp1
                     }
 
                 }
+            }
+        }
+
+        public static void GraphTraversalDFS(int[][] graph)
+        {
+            var seen = new bool[graph.Length];
+            GraphDFS(0, graph, seen);
+        }
+
+        internal static void GraphDFS(int vertex, int[][] graph, bool[] seen)
+        {
+            Console.WriteLine(vertex);
+            seen[vertex] = true;
+            var connections = graph[vertex];
+            foreach (var connection in connections)
+            {
+                if (seen[connection]!=true)
+                    GraphDFS(connection, graph, seen);
             }
         }
     }
