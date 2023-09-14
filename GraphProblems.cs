@@ -8,6 +8,29 @@ namespace ConsoleApp1
 {
     internal class GraphProblems
     {
+        public static bool CanFinish(int numCourses, int[][] prerequisites)
+        {
+            List<int>[] adjList = new List<int>[numCourses];
+            for (int i = 0; i < numCourses; i++)
+            {
+                adjList[i] = new List<int>();
+            }
+
+            var inDegree = new int[numCourses];
+
+            for (int i = 0; i < prerequisites.Length; i++)
+            {
+                var prerequisite = prerequisites[i];
+                var source = prerequisite[1];
+                var target  = prerequisite[0];
+                adjList[source].Add(target);
+                inDegree[target]++;
+            }
+
+            return false;
+            
+        }
+
         public static void GraphTraversalBFS(int[][] graph)
         {
             Queue<int[]> queue = new Queue<int[]>();
