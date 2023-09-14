@@ -16,19 +16,37 @@ namespace ConsoleApp1
                 adjList[i] = new List<int>();
             }
 
-            var inDegree = new int[numCourses];
+            var inDegree = new int[numCourses];// used in topological sort, DAP - Directed Acyclic Graph
 
             for (int i = 0; i < prerequisites.Length; i++)
             {
                 var prerequisite = prerequisites[i];
                 var source = prerequisite[1];
-                var target  = prerequisite[0];
+                var target = prerequisite[0];
                 adjList[source].Add(target);
                 inDegree[target]++;
             }
 
-            return false;
-            
+            var stack = new Stack<int>();
+            for (int i = 0; i < inDegree.Length; i++)
+            {
+                if (inDegree[i] == 0) stack.Push(i);
+            }
+            int count = 0;
+            while (stack.Count > 0)
+            {
+                var current = stack.Pop();
+                count++;
+                var adjacent = adjList[current];
+                for (int j = 0; j < adjacent.Count; j++)
+                {
+                    var next = adjacent[j];
+                    inDegree[next]--;
+                    if (inDegree[next] == 0) stack.Push(next);
+                }
+            }
+            return count == numCourses;
+
         }
 
         public static void GraphTraversalBFS(int[][] graph)
@@ -67,7 +85,7 @@ namespace ConsoleApp1
             var connections = graph[vertex];
             foreach (var connection in connections)
             {
-                if (seen[connection]!=true)
+                if (seen[connection] != true)
                     GraphDFS(connection, graph, seen);
             }
         }
