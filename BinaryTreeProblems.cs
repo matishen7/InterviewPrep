@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static ConsoleApp1.BST;
 
 namespace ConsoleApp1
@@ -57,13 +58,39 @@ namespace ConsoleApp1
         public static bool SameTreeDFS(TreeNode p, TreeNode q)
         {
             if (p == null && q == null) return true;
-            else if (p == null && q != null) return false;
-            else if (p != null && q == null) return false;
+            if (p == null && q != null) return false;
+            if (p != null && q == null) return false;
 
-            else if ( p.value != q.value) return false;
-            SameTreeDFS(p.left, q.left);
-            SameTreeDFS(p.right, q.right);
-            return true;
+            if (p.value != q.value) return false;
+            if (SameTreeDFS(p.left, q.left) && SameTreeDFS(p.right, q.right))
+                return true;
+            return false;
+        }
+
+        public static IList<IList<int>> LevelOrder(TreeNode node)
+        {
+
+            var answer = new List<IList<int>>();
+            if (node == null) return answer;
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(node);
+            while (q.Count > 0)
+            {
+                var currentLevelValues = new List<int>();
+                int count = 0;
+                int level = q.Count;
+                while (count < level)
+                {
+                    TreeNode currentNode = q.Dequeue();
+                    currentLevelValues.Add(currentNode.value);
+                    count++;
+                    if (currentNode.left != null) q.Enqueue(currentNode.left);
+                    if (currentNode.right != null) q.Enqueue(currentNode.right);
+                }
+
+                answer.Add(currentLevelValues);
+            }
+            return answer;
         }
     }
 }
