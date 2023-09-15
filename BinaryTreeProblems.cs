@@ -61,7 +61,7 @@ namespace ConsoleApp1
             if (p == null && q != null) return false;
             if (p != null && q == null) return false;
 
-            if (p.value != q.value) return false;
+            if (p.val != q.val) return false;
             if (SameTreeDFS(p.left, q.left) && SameTreeDFS(p.right, q.right))
                 return true;
             return false;
@@ -82,7 +82,7 @@ namespace ConsoleApp1
                 while (count < level)
                 {
                     TreeNode currentNode = q.Dequeue();
-                    currentLevelValues.Add(currentNode.value);
+                    currentLevelValues.Add(currentNode.val);
                     count++;
                     if (currentNode.left != null) q.Enqueue(currentNode.left);
                     if (currentNode.right != null) q.Enqueue(currentNode.right);
@@ -91,6 +91,41 @@ namespace ConsoleApp1
                 answer.Add(currentLevelValues);
             }
             return answer;
+        }
+
+        public static int KthSmallest(TreeNode root, int k)
+        {
+            var list = new List<int>();
+            Console.WriteLine("***BFS of Binary Tree***");
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(root);
+            while (q.Count > 0)
+            {
+                TreeNode currentNode = q.Dequeue();
+                list.Add(currentNode.val);
+                if (currentNode.left != null) q.Enqueue(currentNode.left);
+                if (currentNode.right != null) q.Enqueue(currentNode.right);
+            }
+
+            var arr = list.ToArray();
+            Array.Sort(arr);
+            return arr[k - 1];
+        }
+
+        public static bool IsValidBST(TreeNode root)
+        {
+            return IsValidDFS(root, long.MinValue, long.MaxValue);
+        }
+
+        static bool IsValidDFS(TreeNode node, long min, long max)
+        {
+            if (node.val <= min || node.val >= max)
+                return false;
+            if (node.left != null)
+                if (!IsValidDFS(node.left, min, node.val)) return false;
+            if (node.right != null)
+                if (!IsValidDFS(node.right, node.val, max)) return false;
+            return true;
         }
     }
 }
