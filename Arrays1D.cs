@@ -15,12 +15,7 @@ namespace ConsoleApp1
             var set = new HashSet<int>();
             for (int i = 0; i < nums.Length; i++)
                 set.Add(nums[i]);
-            var list = new List<int>();
-            foreach (var item in set)
-            {
-                list.Add(item);
-            }
-            var listArr = list.ToArray();
+            var listArr = set.ToArray();
             Array.Sort(listArr);
             var prev = listArr[0];
             int max = 1;

@@ -48,5 +48,22 @@ namespace ConsoleApp1
             if (root == null) return 0;
             return 1 + Math.Max(MaxHeight(root.left), MaxHeight(root.right));
         }
+
+        public static bool IsSameTree(TreeNode p, TreeNode q)
+        {
+            return SameTreeDFS(p, q);
+        }
+
+        public static bool SameTreeDFS(TreeNode p, TreeNode q)
+        {
+            if (p == null && q == null) return true;
+            else if (p == null && q != null) return false;
+            else if (p != null && q == null) return false;
+
+            else if ( p.value != q.value) return false;
+            SameTreeDFS(p.left, q.left);
+            SameTreeDFS(p.right, q.right);
+            return true;
+        }
     }
 }
