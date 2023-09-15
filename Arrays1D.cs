@@ -8,6 +8,37 @@ namespace ConsoleApp1
 {
     internal class Arrays1D
     {
+        public static int LongestConsecutive(int[] nums)
+        {
+            if (nums.Length == 0) return 0;
+            if (nums.Length == 1) return 1;
+            var set = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+                set.Add(nums[i]);
+            var list = new List<int>();
+            foreach (var item in set)
+            {
+                list.Add(item);
+            }
+            var listArr = list.ToArray();
+            Array.Sort(listArr);
+            var prev = listArr[0];
+            int max = 1;
+            int count = 1;
+            for (int i = 1; i < listArr.Length; i++)
+            {
+                if ((listArr[i] - prev == 1) || (listArr[i] - prev == 0))
+                    count++;
+                else
+                {
+                    if (count > max) max = count;
+                    count = 1;
+                }
+                prev = listArr[i];
+            }
+
+            return (max > count) ? max : count;
+        }
         public static int maxSubArray(int[] nums)
         {
             int[] maxSum = new int[nums.Length];
@@ -58,7 +89,7 @@ namespace ConsoleApp1
             int index1 = -1;
             int index2 = -1;
 
-            index1 = BinarySearch(arr1.ToArray(), target); 
+            index1 = BinarySearch(arr1.ToArray(), target);
             index2 = BinarySearch(arr2.ToArray(), target);
 
             if (index1 == -1 && index2 == -1) return -1;
@@ -83,7 +114,7 @@ namespace ConsoleApp1
             else if (arr[mid] < target)
                 return BS(arr, mid + 1, right, target);
             else return BS(arr, left, mid - 1, target);
-            
+
         }
 
         public static IList<IList<int>> ThreeSum(int[] arr)
