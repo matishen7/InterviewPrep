@@ -11,6 +11,55 @@ namespace ConsoleApp1
             new int[] {0, -1},
             new int[] {-1, 0}};
 
+        public static IList<IList<int>> PacificAtlantic(int[][] heights)
+        {
+            Print2DArray(heights);
+            int rows = heights.Length;
+            int cols = heights[0].Length;
+            bool[,] pacVisit = new bool[rows, cols];
+            bool[,] atVisit = new bool[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                DFSPacificAndAtlantic(i, 0, heights, pacVisit, heights[i][0]);
+                DFSPacificAndAtlantic(i, cols - 1, heights, atVisit, heights[i][cols - 1]);
+            }
+
+            for (int j = 0; j < cols; j++)
+            {
+                DFSPacificAndAtlantic(0, j, heights, pacVisit, heights[0][j]);
+                DFSPacificAndAtlantic(rows - 1, j, heights, atVisit, heights[rows - 1][j]);
+            }
+
+            List<IList<int>> result = new();
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    if (pacVisit[i, j] && atVisit[i, j])
+                    {
+                        result.Add(new List<int> { i, j });
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static void DFSPacificAndAtlantic(int r, int c, int[][] heights, bool[,] visit, int prevHeight)
+        {
+            int rows = heights.Length;
+            int cols = heights[0].Length;
+            if (r < 0 || r >= rows || c < 0 || c >= cols || heights[r][c] < prevHeight || visit[r, c])
+                return;
+
+            visit[r, c] = true;
+            DFSPacificAndAtlantic(r + 1, c, heights, visit, heights[r][c]);
+            DFSPacificAndAtlantic(r - 1, c, heights, visit, heights[r][c]);
+            DFSPacificAndAtlantic(r, c + 1, heights, visit, heights[r][c]);
+            DFSPacificAndAtlantic(r, c - 1, heights, visit, heights[r][c]);
+        }
+
         public static int[][] FloodFill(int[][] image, int sr, int sc, int color)
         {
             bool[][] seen = new bool[image.Length][];

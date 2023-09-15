@@ -8,6 +8,9 @@ namespace ConsoleApp1
 {
     internal class GraphProblems
     {
+
+       
+
         public static bool CanFinish(int numCourses, int[][] prerequisites)
         {
             List<int>[] adjList = new List<int>[numCourses];
