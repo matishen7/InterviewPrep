@@ -8,6 +8,16 @@ namespace ConsoleApp1
 {
     internal class StringProblems
     {
+        public static bool IsAcronym(IList<string> words, string s)
+        {
+            if (s.Length != words.Count) return false;
+            int i = 0;
+            foreach (string word in words)
+            {
+                if (word[0] != s[i][0]) return false;
+            }
+        }
+
         public static int CharacterReplacement(string s, int k)
         {
             var map = new Dictionary<char, int>()
