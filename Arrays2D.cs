@@ -11,6 +11,8 @@ namespace ConsoleApp1
             new int[] {0, -1},
             new int[] {-1, 0}};
 
+
+
         public static IList<IList<int>> PacificAtlantic(int[][] heights)
         {
             Print2DArray(heights);
@@ -106,39 +108,28 @@ namespace ConsoleApp1
                 var coordinates = queue.Dequeue();
                 int currentRow = coordinates[0], currentColumn = coordinates[1];
                 bool[] result = new bool[word.Length];
-                seen[currentRow][currentColumn] = true;
-
-                result[0] = true;
-                for (int i = 1; i < word.Length; i++)
-                {
-                    var currentChar = word[i];
-                    var nextCharacterCoordinatesQueue = FindNextCharacters(currentChar, board, currentRow, currentColumn, seen);
-                    while (nextCharacterCoordinatesQueue.Count > 0)
-                    {
-                        var nextCharacterCoordinates = nextCharacterCoordinatesQueue.Dequeue();
-                        var nextCharacterRow = nextCharacterCoordinates[0];
-                        var nextCharacterColumn = nextCharacterCoordinates[1];
-                        if (nextCharacterRow != -1 && nextCharacterColumn != -1)
-                        {
-                            result[i] = true;
-                            currentRow = nextCharacterRow; currentColumn = nextCharacterColumn;
-                            seen[currentRow][currentColumn] = true;
-                        }
-                    }
-
-                }
-
-                var res = true;
-
-                for (int k = 0; k < result.Length; k++)
-                {
-                    if (result[k] == false) { res = false; break; }
-                }
-
-                if (res) return res;
+                int currentWordIndex = 0;
+                ExistDFS(board, seen, result, currentRow, currentColumn, currentWordIndex, word);
             }
 
             return false;
+        }
+
+        public static void ExistDFS(char[][] board, bool[][] seen, bool[] result, int r, int c, int currentWordIndex, string word)
+        {
+            int rows = board.Length;
+            int cols = board[0].Length;
+            if (r < 0 || r >= rows || c < 0 || c >= cols || seen[r][c] || currentWordIndex >= word.Length)
+                return;
+            seen[r][c] = true;
+            if (board[r][c] == word[currentWordIndex])
+            {
+                result[currentWordIndex] = true;
+                ExistDFS(board, seen, result, r + 1, c, currentWordIndex + 1, word);
+                ExistDFS(board, seen, result, r - 1, c, currentWordIndex + 1, word);
+                ExistDFS(board, seen, result, r , c + 1, currentWordIndex + 1, word);
+                ExistDFS(board, seen, result, r , c - 1, currentWordIndex + 1, word);
+            }
         }
 
         static Queue<int[]> FindNextCharacters(char cc, char[][] matrix, int currentRow, int currentColumn, bool[][] seen)

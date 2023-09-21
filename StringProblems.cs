@@ -14,8 +14,10 @@ namespace ConsoleApp1
             int i = 0;
             foreach (string word in words)
             {
-                if (word[0] != s[i][0]) return false;
+                if (word[0] != s[i]) return false;
+                i++;
             }
+            return true;
         }
 
         public static int CharacterReplacement(string s, int k)
