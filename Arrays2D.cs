@@ -95,104 +95,65 @@ namespace ConsoleApp1
 
         public static bool Exist(char[][] board, string word)
         {
-            var queue = FindCharacter(word[0], board);
-            if (queue.Count == 0) return false;
-            while (queue.Count > 0)
+            int rows = board.Length;
+            int cols = board[0].Length;
+
+            for (int i = 0; i < rows; i++)
             {
-                bool[][] seen = new bool[board.Length][];
-                for (var i = 0; i < board.Length; i++)
+                for (int j = 0; j < cols; j++)
                 {
-                    seen[i] = new bool[board[i].Length];
+                    if (board[i][j] == word[0])
+                    {
+                        bool[][] seen = new bool[rows][];
+                        for (int k = 0; k < rows; k++)
+                        {
+                            seen[k] = new bool[cols];
+                        }
+
+                        bool found = ExistDFS(board, seen, i, j, 0, word);
+                        if (found)
+                        {
+                            return true;
+                        }
+                    }
                 }
-
-                var coordinates = queue.Dequeue();
-                int currentRow = coordinates[0], currentColumn = coordinates[1];
-                result = new bool[word.Length];
-                int currentWordIndex = 0;
-                ExistDFS(board, seen, result, currentRow, currentColumn, currentWordIndex, word);
-
-                if (CheckResult(result)) return true;
             }
 
             return false;
         }
 
-        private static bool CheckResult(bool[] result)
-        {
-            for (int k = 0; k < result.Length; k++)
-            {
-                if (result[k] == false) return false;
-            }
-            return true;
-        }
 
-        public static void ExistDFS(char[][] board, bool[][] seen, bool[] result, int r, int c, int currentWordIndex, string word)
+        private static bool ExistDFS(char[][] board, bool[][] seen, int r, int c, int currentWordIndex, string word)
         {
+            if (currentWordIndex == word.Length)
+            {
+                return true; // All characters in the word have been found.
+            }
+
             int rows = board.Length;
             int cols = board[0].Length;
-            if (r < 0 || r >= rows || c < 0 || c >= cols || seen[r][c] || currentWordIndex >= word.Length)
-                return;
+
+            if (r < 0 || r >= rows || c < 0 || c >= cols || seen[r][c] || board[r][c] != word[currentWordIndex])
+            {
+                return false;
+            }
+
             seen[r][c] = true;
-            if (board[r][c] == word[currentWordIndex])
+
+            foreach (var direction in directions)
             {
-                result[currentWordIndex] = true;
-                ExistDFS(board, seen, result, r + 1, c, currentWordIndex + 1, word);
-                ExistDFS(board, seen, result, r - 1, c, currentWordIndex + 1, word);
-                ExistDFS(board, seen, result, r, c + 1, currentWordIndex + 1, word);
-                ExistDFS(board, seen, result, r, c - 1, currentWordIndex + 1, word);
-            }
-        }
+                int newRow = r + direction[0];
+                int newCol = c + direction[1];
 
-        static Queue<int[]> FindNextCharacters(char cc, char[][] matrix, int currentRow, int currentColumn, bool[][] seen)
-        {
-            Queue<int[]> queue = new Queue<int[]>();
-            int m = matrix.Length, n = matrix[0].Length;
-            for (int i = 0; i < directions.Length; i++)
-            {
-                var currentDirection = directions[i];
-                var nextRow = currentRow + currentDirection[0];
-                var nextCol = currentColumn + currentDirection[1];
-                if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || seen[nextRow][nextCol] == true) continue;
-                if (matrix[nextRow][nextCol] == cc) queue.Enqueue(new int[] { nextRow, nextCol });
-            }
-
-            return queue;
-        }
-
-        static Queue<int[]> FindCharacter(char cc, char[][] matrix)
-        {
-            Queue<int[]> queue = new Queue<int[]>();
-            Queue<int[]> coordinates = new Queue<int[]>();
-
-            bool[][] seen = new bool[matrix.Length][];
-            for (var i = 0; i < matrix.Length; i++)
-            {
-                seen[i] = new bool[matrix[i].Length];
-            }
-
-            queue.Enqueue(new int[] { 0, 0 });
-
-            while (queue.Count > 0)
-            {
-                var currentCoordinates = queue.Dequeue();
-                int currentRow = currentCoordinates[0];
-                int currentCol = currentCoordinates[1];
-                seen[currentRow][currentCol] = true;
-                if (matrix[currentRow][currentCol] == cc) coordinates.Enqueue(new int[] { currentRow, currentCol });
-                for (int i = 0; i < directions.Length; i++)
+                if (ExistDFS(board, seen, newRow, newCol, currentWordIndex + 1, word))
                 {
-                    var currentDirection = directions[i];
-                    var nextRow = currentRow + currentDirection[0];
-                    var nextCol = currentCol + currentDirection[1];
-                    if (nextRow < 0 || nextRow >= matrix.Length || nextCol < 0 || nextCol >= matrix[currentRow].Length || seen[nextRow][nextCol] == true) continue;
-                    queue.Enqueue(new int[] { nextRow, nextCol });
-                    currentRow = nextRow;
-                    currentCol = nextCol;
-                    seen[currentRow][currentCol] = true;
+                    return true;
                 }
             }
 
-            return coordinates;
+            seen[r][c] = false; // Reset the seen flag if the current path doesn't lead to a valid solution.
+
+            return false;
         }
 
         public static IList<int> SpiralOrder(int[][] matrix)
