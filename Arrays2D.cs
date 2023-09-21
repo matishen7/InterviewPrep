@@ -11,7 +11,7 @@ namespace ConsoleApp1
             new int[] {0, -1},
             new int[] {-1, 0}};
 
-
+        private static bool[] result;
 
         public static IList<IList<int>> PacificAtlantic(int[][] heights)
         {
@@ -107,12 +107,23 @@ namespace ConsoleApp1
 
                 var coordinates = queue.Dequeue();
                 int currentRow = coordinates[0], currentColumn = coordinates[1];
-                bool[] result = new bool[word.Length];
+                result = new bool[word.Length];
                 int currentWordIndex = 0;
                 ExistDFS(board, seen, result, currentRow, currentColumn, currentWordIndex, word);
+
+                if (CheckResult(result)) return true;
             }
 
             return false;
+        }
+
+        private static bool CheckResult(bool[] result)
+        {
+            for (int k = 0; k < result.Length; k++)
+            {
+                if (result[k] == false) return false;
+            }
+            return true;
         }
 
         public static void ExistDFS(char[][] board, bool[][] seen, bool[] result, int r, int c, int currentWordIndex, string word)
@@ -127,8 +138,8 @@ namespace ConsoleApp1
                 result[currentWordIndex] = true;
                 ExistDFS(board, seen, result, r + 1, c, currentWordIndex + 1, word);
                 ExistDFS(board, seen, result, r - 1, c, currentWordIndex + 1, word);
-                ExistDFS(board, seen, result, r , c + 1, currentWordIndex + 1, word);
-                ExistDFS(board, seen, result, r , c - 1, currentWordIndex + 1, word);
+                ExistDFS(board, seen, result, r, c + 1, currentWordIndex + 1, word);
+                ExistDFS(board, seen, result, r, c - 1, currentWordIndex + 1, word);
             }
         }
 
@@ -159,12 +170,7 @@ namespace ConsoleApp1
                 seen[i] = new bool[matrix[i].Length];
             }
 
-
-
             queue.Enqueue(new int[] { 0, 0 });
-            seen[0][0] = true;
-
-
 
             while (queue.Count > 0)
             {

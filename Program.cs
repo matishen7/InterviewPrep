@@ -11,5 +11,5 @@ char[][] jaggedCharArray = new char[][]
     new char[] { 'A', 'D', 'E', 'E' }
 };
 
-string s = "";
+string s = "ABCCED";
 Arrays2D.Exist(jaggedCharArray, s);
