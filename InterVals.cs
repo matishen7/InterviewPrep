@@ -8,7 +8,24 @@ namespace ConsoleApp1
 {
     internal class InterVals
     {
+        public static int[] Intersection(int[] nums1, int[] nums2)
+        {
+            var set1 = new HashSet<int>();
+            var set2 = new HashSet<int>();
+            for (int i = 0;  i < nums1.Length;i++)
+                set1.Add(nums1[i]);
+            for (int i = 0; i < nums2.Length; i++)
+                set2.Add(nums2[i]);
 
+            var answer = new HashSet<int>();
+
+            foreach (var num in set1)
+            {
+                if (set2.Contains(num)) answer.Add(num);
+            }
+
+            return answer.ToArray();
+        }
         public  static int EraseOverlapIntervals(int[][] intervals)
         {
             if (intervals.Length <= 1) return 0;
