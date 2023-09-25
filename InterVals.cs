@@ -8,6 +8,40 @@ namespace ConsoleApp1
 {
     internal class InterVals
     {
+        public static int[] Intersect(int[] nums1, int[] nums2)
+        {
+            var map1 = new Dictionary<int, int>();
+            var map2 = new Dictionary<int, int>();
+            foreach (int num in nums1)
+            {
+                if (map1.ContainsKey(num)) map1[num]++;
+                else map1.Add(num, 1);
+            }
+
+            foreach (int num in nums2)
+            {
+                if (map2.ContainsKey(num)) map2[num]++;
+                else map2.Add(num, 1);
+            }
+
+            var answer = new List<int>();
+
+            foreach (var pair in map1)
+            {
+                var num = pair.Key;
+                var count1 = pair.Value;
+                if (map2.ContainsKey(num))
+                {
+                    var count2 = map2[num];
+                    var min = (count1 > count2) ? count2 : count1;
+                    for (int j = 0; j < min; j++)
+                        answer.Add(num);
+                }
+            }
+
+            return answer.ToArray();
+        }
+
         public static int[] Intersection(int[] nums1, int[] nums2)
         {
             var set1 = new HashSet<int>();
