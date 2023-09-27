@@ -8,6 +8,48 @@ namespace ConsoleApp1
 {
     internal class InterVals
     {
+
+        public static IList<int> AddToArrayForm(int[] num, int k)
+        {
+            int power = num.Length - 1;
+            int result = 0;
+            foreach (int i in num)
+            {
+                var number = i * Math.Pow(10, power);
+                result += (int) number;
+                power--;
+            }
+
+            result= result + k;
+            var list = new List<int>();
+            while (result > 0)
+            {
+                var d = result%10;
+                list.Add(d);
+                result /= 10;
+            }
+
+            var rev = new List<int>();
+            for (int i = list.Count - 1; i >=0; i--)
+                rev.Add(list[i]);
+            return rev;
+
+        }
+
+        public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
+        {
+            var currNodeA = headA;
+            var currNodeB = headB;
+
+            while (currNodeA != null && currNodeB == null)
+            {
+                currNodeA = currNodeA.next;
+                currNodeB = currNodeB.next;
+            }
+
+            return null;
+        }
+
         public static int[] Intersect(int[] nums1, int[] nums2)
         {
             var map1 = new Dictionary<int, int>();
@@ -46,7 +88,7 @@ namespace ConsoleApp1
         {
             var set1 = new HashSet<int>();
             var set2 = new HashSet<int>();
-            for (int i = 0;  i < nums1.Length;i++)
+            for (int i = 0; i < nums1.Length; i++)
                 set1.Add(nums1[i]);
             for (int i = 0; i < nums2.Length; i++)
                 set2.Add(nums2[i]);
@@ -60,7 +102,7 @@ namespace ConsoleApp1
 
             return answer.ToArray();
         }
-        public  static int EraseOverlapIntervals(int[][] intervals)
+        public static int EraseOverlapIntervals(int[][] intervals)
         {
             if (intervals.Length <= 1) return 0;
             intervals = intervals.OrderBy(innerArr => innerArr[0]).ToArray();
