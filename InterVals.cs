@@ -11,29 +11,49 @@ namespace ConsoleApp1
 
         public static IList<int> AddToArrayForm(int[] num, int k)
         {
-            int power = num.Length - 1;
-            int result = 0;
-            foreach (int i in num)
-            {
-                var number = i * Math.Pow(10, power);
-                result += (int) number;
-                power--;
-            }
-
-            result= result + k;
+            int currentIndex = num.Length - 1;
+            int carry = 0;
             var list = new List<int>();
-            while (result > 0)
+            while (k > 0)
             {
-                var d = result%10;
-                list.Add(d);
-                result /= 10;
+                var d = k % 10;
+                var add = num[currentIndex] + d;
+
+                if (add >= 10)
+                {
+                    list.Add(add % 10);
+                    carry = add / 10;
+                }
+                else list.Add(add);
+
+                k /= 10;
+                currentIndex--;
             }
 
-            var rev = new List<int>();
-            for (int i = list.Count - 1; i >=0; i--)
-                rev.Add(list[i]);
-            return rev;
+            while (currentIndex >= 0)
+            {
+                var add = num[currentIndex] + carry;
+                list.Add(add % 10);
+                carry = add / 10;
+                currentIndex--;
+            }
+            if (carry > 0)
+            {
+                var add = carry + list[list.Count - 1];
+                list[list.Count - 1] = add % 10;
+                carry = add / 10;
+            }
+            if (carry > 0) list.Add(carry);
+            return ReverseList(list);
 
+        }
+
+        public static List<int> ReverseList(List<int> list)
+        {
+            var reversed = new List<int>();
+            for (int i = list.Count - 1; i >= 0; i--)
+                reversed.Add(list[i]);
+            return reversed;
         }
 
         public static ListNode GetIntersectionNode(ListNode headA, ListNode headB)
